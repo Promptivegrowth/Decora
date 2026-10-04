@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
+/*
+ * D'Cora Hogar — sistema de diseño
+ * Colores y tipografías tomados exclusivamente del Brandboard oficial.
+ *   Principal          #144C42
+ *   Secundario         #DAB36F
+ *   Fondo claro        #FBF6E6
+ *   Fondo alternativo  #121D2C
+ *   Apoyo / Acento     #1C3F26
+ *   Tipografías: Avenir (títulos) y Montserrat (texto).
+ */
+
+@theme {
+  --color-*: initial;
+  --color-teal: #144c42;
+  --color-gold: #dab36f;
+  --color-cream: #fbf6e6;
+  --color-navy: #121d2c;
+  --color-forest: #1c3f26;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  /* Avenir es una fuente comercial: se usa si está instalada (macOS / iOS la incluyen)
+     o si se agregan los archivos licenciados en public/fonts (ver README). En otros
+     sistemas cae a Montserrat, la segunda tipografía oficial de la marca. */
+  --font-display: "Avenir LT Pro", "Avenir Next", "Avenir", var(--font-montserrat), ui-sans-serif, sans-serif;
+
+  --ease-roll: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --breakpoint-xs: 26rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --header-h: 76px;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+  body {
+    @apply bg-cream font-sans text-navy antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-navy);
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  img, video {
+    max-width: 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-10;
+  }
+
+  /* Subencabezado del brandboard: mayúsculas con tracking amplio */
+  .eyebrow {
+    @apply font-display text-[0.72rem] font-semibold tracking-[0.32em] uppercase;
+  }
+
+  /* Textura de lamas (roller dúo / zebra) usada como recurso gráfico */
+  .slats {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklab, currentColor 14%, transparent) 0 2px,
+      transparent 2px 22px
+    );
+  }
+
+  /* Tejido screen: se usa para muestras de tela */
+  .weave {
+    background-image:
+      repeating-linear-gradient(90deg, rgb(0 0 0 / 0.07) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(0deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 4px);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Botón con relleno que "baja" como una cortina */
+  .btn {
+    @apply relative isolate inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide transition-colors duration-500;
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translateY(-101%);
+    transition: transform 0.55s var(--ease-roll);
+    background: var(--btn-fill, var(--color-navy));
+  }
+  .btn:hover::before,
+  .btn:focus-visible::before {
+    transform: translateY(0);
+  }
+  .btn-gold {
+    @apply bg-gold text-navy;
+    --btn-fill: var(--color-cream);
+  }
+  .btn-teal {
+    @apply bg-teal text-cream hover:text-navy;
+    --btn-fill: var(--color-gold);
+  }
+  .btn-navy {
+    @apply bg-navy text-cream hover:text-navy;
+    --btn-fill: var(--color-gold);
+  }
+  .btn-ghost-light {
+    @apply text-cream ring-1 ring-cream/40 ring-inset hover:text-navy;
+    --btn-fill: var(--color-cream);
+  }
+  .btn-ghost-dark {
+    @apply text-navy ring-1 ring-navy/25 ring-inset hover:text-cream;
+    --btn-fill: var(--color-teal);
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-navy/15 bg-cream px-4 py-3 text-[0.95rem] text-navy transition outline-none placeholder:text-navy/40 focus:border-teal focus:ring-4 focus:ring-teal/15;
+  }
+  .field[aria-invalid="true"] {
+    @apply border-forest ring-4 ring-gold/40;
+  }
+  .label {
+    @apply mb-1.5 block text-[0.8rem] font-semibold tracking-wide text-navy/80;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
