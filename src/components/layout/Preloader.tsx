@@ -5,16 +5,15 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { markReady } from "@/lib/ready";
 
-const MIN_MS = 1500;
-const MAX_MS = 4500;
+const MIN_MS = 2600;
+const MAX_MS = 6000;
 
 const ROLL = [0.76, 0, 0.24, 1] as const;
 
 /**
  * Preloader: la pantalla es una cortina roller cerrada. Mientras carga, el isotipo
  * se "llena" de dorado y la cadena avanza. Al terminar, la cadena se jala hacia
- * abajo (la cortina cede un poco, como un roller real al destrabarse) y luego
- * la cortina se enrolla hacia arriba y descubre la web.
+ * abajo y luego la cortina se enrolla hacia arriba y descubre la web.
  */
 export function Preloader({ label }: { label: string }) {
   const [progress, setProgress] = useState(0);
@@ -33,16 +32,17 @@ export function Preloader({ label }: { label: string }) {
       finished = true;
       setProgress(100);
       if (reduce) setPhase("done");
-      else window.setTimeout(() => setPhase("pull"), 260);
+      else window.setTimeout(() => setPhase("pull"), 450);
     };
 
     const tick = () => {
       const t = performance.now() - start;
-      setProgress((p) => {
-        const target = loaded ? 100 : Math.min(90, (t / MIN_MS) * 82);
-        return Math.max(p, Math.round(p + (target - p) * 0.12));
-      });
-      if ((loaded && t >= MIN_MS) || t >= MAX_MS) finish();
+      // Llenado continuo y suave durante MIN_MS; si la web aún no cargó, espera en 90 %
+      const x = Math.min(1, t / MIN_MS);
+      const eased = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      const target = loaded ? eased * 100 : Math.min(90, eased * 100);
+      setProgress((p) => (target > p ? Math.min(100, Math.ceil(p + (target - p) * 0.35)) : p));
+      if ((loaded && t >= MIN_MS + 120) || t >= MAX_MS) finish();
       else raf = requestAnimationFrame(tick);
     };
 
@@ -81,14 +81,8 @@ export function Preloader({ label }: { label: string }) {
           aria-live="polite"
           aria-label={label}
           className="fixed inset-0 z-[200] flex items-center justify-center bg-navy text-cream"
-          initial={false}
-          animate={phase === "pull" ? { y: [0, 0, 26, 0] } : { y: 0 }}
           exit={{ y: "-100%" }}
-          transition={
-            phase === "pull"
-              ? { duration: 1.2, times: [0, 0.2, 0.62, 1], ease: ["linear", "easeIn", "easeOut"] }
-              : { duration: 1.05, ease: ROLL }
-          }
+          transition={{ duration: 1.05, ease: ROLL }}
         >
           {/* Lamas sutiles del tejido */}
           <div className="slats pointer-events-none absolute inset-0 text-cream/40" aria-hidden />
@@ -113,7 +107,7 @@ export function Preloader({ label }: { label: string }) {
                 height={360}
                 priority
                 unoptimized
-                className="absolute inset-0 h-full w-full object-contain transition-[clip-path] duration-200 ease-out"
+                className="absolute inset-0 h-full w-full object-contain transition-[clip-path] duration-500 ease-out"
                 style={{ clipPath: `inset(0 0 ${100 - progress}% 0)` }}
               />
             </div>
@@ -123,12 +117,12 @@ export function Preloader({ label }: { label: string }) {
               className="mt-6 h-auto w-[170px] sm:w-[210px]"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
             />
             <div className="mt-8 flex w-48 items-center gap-3">
               <span className="relative h-px flex-1 overflow-hidden bg-cream/15">
                 <span
-                  className="absolute inset-y-0 left-0 bg-gold transition-[width] duration-200 ease-out"
+                  className="absolute inset-y-0 left-0 bg-gold transition-[width] duration-500 ease-out"
                   style={{ width: `${progress}%` }}
                 />
               </span>
@@ -147,7 +141,7 @@ export function Preloader({ label }: { label: string }) {
             animate={phase === "pull" ? { y: [0, -14, 190, 150] } : { y: 0 }}
             transition={
               phase === "pull"
-                ? { duration: 1.2, times: [0, 0.2, 0.62, 1], ease: ["easeOut", "easeIn", "easeOut"] }
+                ? { duration: 0.7, times: [0, 0.18, 0.6, 1], ease: ["easeOut", "easeIn", "easeOut"] }
                 : { duration: 0.3 }
             }
             onAnimationComplete={() => phase === "pull" && setPhase("done")}
