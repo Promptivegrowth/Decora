@@ -26,7 +26,15 @@ const en: Dictionary = {
     },
     privacy: {
       title: "Privacy policy",
-      description: "How we handle the personal data you send us through this website.",
+      description: "How we handle the personal data you send us through this website, under Peruvian Law No. 29733.",
+    },
+    security: {
+      title: "Security policy",
+      description: "Measures we apply to protect the information transmitted through our website.",
+    },
+    complaints: {
+      title: "Complaints Book",
+      description: "File your claim or complaint in the virtual Complaints Book of D'Cora Hogar Perú E.I.R.L.",
     },
   },
 
@@ -457,34 +465,235 @@ const en: Dictionary = {
     distributorText: "Join our network of decorators and distributors.",
     rights: "All rights reserved.",
     privacy: "Privacy policy",
+    security: "Security policy",
+    complaints: "Complaints Book",
+    legal: "Legal",
     backTop: "Back to top",
   },
 
   privacy: {
     title: "Privacy policy",
     updated: "Last updated: October 2026",
+    intro:
+      "At D'Cora Hogar we respect your privacy. This policy explains what personal data we collect through this website, why we use it, who we share it with and how you can exercise your rights, in accordance with Peruvian Law No. 29733 on Personal Data Protection and its Regulations approved by Supreme Decree No. 016-2024-JUS.",
     sections: [
       {
+        id: "responsable",
         h: "Data controller",
-        p: "D'Cora Hogar Perú E.I.R.L. is responsible for processing the personal data you provide through the forms on this website, in accordance with Peruvian Law No. 29733 on Personal Data Protection and its regulations.",
+        p: [
+          "The owner of the database and data controller is {legalName}, Tax ID (RUC) {ruc}, with registered address at {address}.",
+          "For any privacy enquiry, contact us through our contact channels or on WhatsApp at {phone}.",
+        ],
       },
       {
+        id: "datos",
         h: "Data we collect",
-        p: "Name, contact details (phone and email), city, company and any information you choose to include in your message or quote request.",
+        lead: ["We only collect the data you voluntarily provide or that is required for the secure operation of the site:"],
+        list: [
+          "Identification and contact data: name, phone, email, city, company or brand.",
+          "Request data: messages, products of interest, quotes and distributor applications.",
+          "Complaints Book data: type and number of ID document, address, ubigeo, details of the complaint and, where applicable, details of the parent or guardian.",
+          "Technical data: IP address and browsing data, used solely for security and abuse prevention.",
+        ],
       },
       {
-        h: "Purpose",
-        p: "We use your data solely to answer your enquiries, send quotes, assess your distributor application and maintain our business relationship with you.",
+        id: "finalidades",
+        h: "Purposes of processing",
+        list: [
+          "Answering your enquiries and sending you quotes.",
+          "Assessing your application as a distributor or decorator and contacting you.",
+          "Registering, handling and answering your claims and complaints under the Consumer Protection Code (Law No. 29571).",
+          "Managing the business relationship and complying with legal obligations.",
+          "Keeping the website secure and preventing spam and fraud.",
+        ],
+        p: ["We do not use your data for other purposes without your consent, nor do we make automated decisions about you."],
       },
       {
-        h: "Retention and security",
-        p: "We keep your data for as long as needed to handle your request and our business relationship, applying reasonable security measures to protect it.",
+        id: "consentimiento",
+        h: "Consent and legal basis",
+        p: [
+          "By ticking the acceptance box on our forms you give your free, prior, express, informed and unequivocal consent to the processing of your data under this policy. You may withdraw it at any time.",
+          "Data recorded in the Complaints Book is processed to comply with a legal obligation.",
+        ],
       },
       {
+        id: "destinatarios",
+        h: "Recipients and transfers",
+        p: [
+          "We do not sell or transfer your data to third parties for commercial purposes. To run the site we work with technology providers acting as data processors: the web hosting service (Vercel Inc., United States) and our corporate email provider. This may involve a cross-border data flow, carried out with adequate security and confidentiality safeguards.",
+          "We may share information with competent authorities, such as INDECOPI, when required by law.",
+        ],
+      },
+      {
+        id: "conservacion",
+        h: "Retention period",
+        list: [
+          "Enquiries and quotes: up to two (2) years from the last contact.",
+          "Distributor applications: during the assessment and up to one (1) year afterwards.",
+          "Complaint forms: at least two (2) years from registration, as required by Complaints Book regulations.",
+        ],
+        p: ["Once these periods expire, data is securely deleted or anonymised."],
+      },
+      {
+        id: "derechos",
         h: "Your rights",
-        p: "You may exercise your rights of access, rectification, cancellation and objection by writing to us through our contact channels.",
+        p: [
+          "You may exercise your rights of information, access, rectification, cancellation, objection and any other rights under Law No. 29733 by sending your request through our contact channels together with a copy of your ID document. We will reply within the legal deadlines.",
+          "If you believe your request has not been addressed, you may contact the National Authority for Personal Data Protection of the Ministry of Justice and Human Rights.",
+        ],
+      },
+      {
+        id: "cookies",
+        h: "Cookies and local storage",
+        p: [
+          "This site does not use advertising or tracking cookies. We only use one functional cookie to remember your language (NEXT_LOCALE) and your browser's local storage to keep your quote list. You can delete them in your browser settings.",
+        ],
+      },
+      {
+        id: "menores",
+        h: "Minors",
+        p: [
+          "Our services are intended for adults. If a minor wishes to file a complaint, they must do so together with their parent or guardian, whose details are recorded on the complaint form.",
+        ],
+      },
+      {
+        id: "cambios",
+        h: "Changes to this policy",
+        p: ["We may update this policy to reflect regulatory or operational changes. The date of the last update appears at the top of this page."],
       },
     ],
+  },
+
+  security: {
+    title: "Security policy",
+    updated: "Last updated: October 2026",
+    intro:
+      "Protecting the information of our customers, decorators and distributors is part of our commitment to trust. This policy describes the technical and organisational measures we apply to protect the confidentiality, integrity and availability of information transmitted through this website.",
+    sections: [
+      {
+        id: "cifrado",
+        h: "Encrypted connection",
+        p: ["The entire site runs exclusively over HTTPS with TLS encryption, so the information you send travels protected between your browser and our servers."],
+      },
+      {
+        id: "infraestructura",
+        h: "Infrastructure and hosting",
+        p: [
+          "The site is hosted on a cloud platform with a global delivery network, protection against denial-of-service attacks and continuous security updates.",
+          "Forms do not store your data in public databases: information is sent directly to our corporate email through an authenticated, encrypted SMTP server.",
+        ],
+      },
+      {
+        id: "formularios",
+        h: "Form protection",
+        list: [
+          "Validation of information both in your browser and on the server.",
+          "Anti-spam controls and submission limits to prevent automated abuse.",
+          "Security headers that prevent the site from being framed by third parties and other common attacks.",
+          "We never ask for passwords, card details or payments through this website.",
+        ],
+      },
+      {
+        id: "acceso",
+        h: "Restricted access and confidentiality",
+        p: [
+          "Only authorised D'Cora Hogar staff access the information received, solely for the purposes described in our Privacy policy. Technical credentials are kept in protected environments and are never exposed in the site's code.",
+        ],
+      },
+      {
+        id: "fraude",
+        h: "Fraud and impersonation prevention",
+        p: [
+          "D'Cora Hogar only communicates through its official channels: this website, the sales WhatsApp {phone} and our corporate email. We will never ask you for payments or bank details through unofficial channels. If you receive a suspicious message in the company's name, do not reply and report it through our contact channels.",
+        ],
+      },
+      {
+        id: "incidentes",
+        h: "Incident management",
+        p: [
+          "In the event of a security incident that could affect personal data, we will immediately take measures to contain it and, where applicable, notify the National Authority for Personal Data Protection and the affected people, in accordance with current regulations.",
+        ],
+      },
+      {
+        id: "reporte",
+        h: "Vulnerability reporting",
+        p: ["If you detect a possible vulnerability on this site, please let us know responsibly through our contact channels, without exploiting or publicly disclosing it."],
+      },
+      {
+        id: "usuario",
+        h: "Recommendations for you",
+        list: [
+          "Check that the site address is the official one and that your browser shows the secure-connection padlock.",
+          "Keep your browser and operating system up to date.",
+          "Do not share sensitive information through unofficial channels.",
+        ],
+      },
+    ],
+  },
+
+  complaints: {
+    hero: {
+      eyebrow: "Consumer service",
+      title: "Complaints Book",
+      text: "In accordance with Peru's Consumer Protection and Defence Code (Law No. 29571), we provide our virtual Complaints Book (Libro de Reclamaciones).",
+    },
+    provider: { title: "Provider details", legalName: "Company name", ruc: "Tax ID (RUC)", address: "Registered address" },
+    sheet: "Complaint form",
+    sheetAuto: "assigned on submission",
+    date: "Date",
+    s1: "Identification of the consumer",
+    s2: "Identification of the product or service",
+    s3: "Details of the complaint and consumer request",
+    fields: {
+      name: "Full name",
+      docType: "ID document type",
+      docTypes: [
+        { value: "DNI", label: "DNI (Peruvian ID)" },
+        { value: "CE", label: "Foreigner ID card (CE)" },
+        { value: "PASAPORTE", label: "Passport" },
+        { value: "RUC", label: "RUC (Tax ID)" },
+      ],
+      docNumber: "Document number",
+      phone: "Phone / mobile",
+      email: "Email",
+      address: "Address",
+      department: "Department",
+      province: "Province",
+      district: "District",
+      minor: "I am under 18",
+      guardian: "Name of parent or guardian",
+      itemType: "Type",
+      itemTypes: [
+        { value: "producto", label: "Product" },
+        { value: "servicio", label: "Service" },
+      ],
+      amount: "Amount claimed (S/) — optional",
+      orderRef: "Order or receipt no. — optional",
+      description: "Description of the product or service",
+      claimType: "Request type",
+      reclamo: "Claim (Reclamo)",
+      reclamoText: "Dissatisfaction related to the products or services.",
+      queja: "Complaint (Queja)",
+      quejaText: "Dissatisfaction not related to the products or services, or discontent regarding customer service.",
+      detail: "Details of the claim or complaint",
+      request: "Consumer request",
+      declare: "I declare that the information provided is true.",
+    },
+    invalidDocument: "Invalid document number",
+    notes: [
+      "Filing a claim does not prevent you from using other dispute resolution channels, nor is it a prerequisite for filing a complaint with INDECOPI.",
+      "The provider must answer the claim or complaint within no more than fifteen (15) non-extendable business days.",
+      "You will receive a PDF copy of your complaint form at the email address you provide.",
+    ],
+    submit: "Submit complaint form",
+    loading: "Loading…",
+    success: {
+      title: "Your complaint form has been registered",
+      number: "Complaint form No.",
+      text: "We have sent a PDF copy to your email. We will reply within a maximum of 15 business days.",
+      download: "Download copy (PDF)",
+      again: "Register another form",
+    },
   },
 
   notFound: {

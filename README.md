@@ -66,6 +66,23 @@ MAIL_AUTOREPLY=true                    # opcional, envía una confirmación al c
 
 En producción, si falta el SMTP, la API responde 503 y el formulario ofrece WhatsApp como alternativa.
 
+## Libro de Reclamaciones
+
+Ruta: `/es/libro-de-reclamaciones` (`/en/complaints-book`), con un acceso visible en el footer. Cumple el formato de la Hoja de Reclamación (Ley N.° 29571 y su reglamento):
+
+- **Datos del proveedor:** razón social, RUC y domicilio fiscal, configurados en `src/data/site.ts`.
+- **Identificación del consumidor:** documento validado según su tipo (DNI, CE, pasaporte o RUC), domicilio con **ubigeo INEI** (departamento → provincia → distrito, en `public/data/ubigeo.json`) y datos del padre, madre o apoderado si es menor de edad.
+- **Bien contratado, tipo de solicitud y detalle:** producto o servicio, monto, reclamo o queja, detalle y pedido.
+
+Al enviarla, `/api/complaint` genera la **hoja en PDF** y la envía por correo **a la empresa** (`RECLAMOS_TO`, `MAIL_TO` o `SMTP_USER`) y **en copia al consumidor**. El consumidor también puede descargarla en ese momento.
+
+**Numeración:** con Upstash Redis conectado (Vercel → Storage / Marketplace, variables `UPSTASH_REDIS_REST_URL` y `UPSTASH_REDIS_REST_TOKEN`), el número es correlativo por año (`000000001-2026`). Sin Upstash se usa un código único basado en la fecha y hora de Lima. Se recomienda conectar Upstash para cumplir la numeración correlativa.
+
+## Políticas
+
+- `/es/privacidad`: política de privacidad (Ley N.° 29733 y D.S. N.° 016-2024-JUS)
+- `/es/politica-de-seguridad`: política de seguridad de la información
+
 ## Contenido editable
 
 | Qué | Dónde |

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUp, Mail, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUp, BookOpen, Mail, MapPin } from "lucide-react";
 import { categories } from "@/data/products";
 import { site, whatsappLink } from "@/data/site";
 import { href, type Locale } from "@/i18n/config";
@@ -56,6 +56,16 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
         <div className="lg:col-span-4">
           <Logo color="dorado" layout="stacked" className="h-auto w-44" />
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-cream/65">{f.tagline}</p>
+          <Link
+            href={href(lang, "complaints")}
+            className="group mt-6 inline-flex items-center gap-3 rounded-xl bg-cream px-4 py-3 text-navy transition-colors hover:bg-gold"
+          >
+            <BookOpen className="h-6 w-6 text-teal" />
+            <span className="leading-tight">
+              <span className="block text-sm font-bold">{f.complaints}</span>
+              <span className="block text-[0.7rem] text-navy/60">{site.legalName}</span>
+            </span>
+          </Link>
           {socials.length > 0 && (
             <ul className="mt-6 flex gap-3">
               {socials.map(({ url, Icon, label }) => (
@@ -142,11 +152,18 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
       <div className="relative border-t border-cream/10">
         <div className="container-x flex flex-col gap-4 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.legalName} {f.rights}
+            © {new Date().getFullYear()} {site.legalName}
+            {site.ruc ? ` · RUC ${site.ruc}` : ""} · {f.rights}
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <Link href={href(lang, "privacy")} className="transition-colors hover:text-gold">
               {f.privacy}
+            </Link>
+            <Link href={href(lang, "security")} className="transition-colors hover:text-gold">
+              {f.security}
+            </Link>
+            <Link href={href(lang, "complaints")} className="transition-colors hover:text-gold">
+              {f.complaints}
             </Link>
             <a href="#top" className="flex items-center gap-2 transition-colors hover:text-gold">
               {f.backTop}

@@ -252,9 +252,29 @@ def build_videos():
     lst.unlink()
 
 
+def build_pdf_logo():
+    """Logo horizontal en PNG embebido como base64 para el PDF del Libro de Reclamaciones."""
+    import base64, io
+    print("Logo para PDF")
+    im = Image.open(BRAND / "logo-h-azul.webp").convert("RGBA")
+    im.thumbnail((520, 520), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, "PNG", optimize=True)
+    b64 = base64.b64encode(buf.getvalue()).decode()
+    out = ROOT / "src" / "lib" / "pdf-logo.ts"
+    out.write_text(
+        "// Generado por scripts/optimize-assets.py — logo horizontal (azul) en PNG\n"
+        f'export const LOGO_PNG_BASE64 = "{b64}";\n'
+        f"export const LOGO_SIZE = {{ width: {im.width}, height: {im.height} }};\n",
+        encoding="utf-8",
+    )
+    print(f"  {out.relative_to(ROOT)}  {len(b64) // 1024} KB")
+
+
 if __name__ == "__main__":
     os.chdir(ROOT)
     build_logos()
+    build_pdf_logo()
     build_icons()
     build_brandboard_photos()
     build_video_photos()

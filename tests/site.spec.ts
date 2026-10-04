@@ -231,3 +231,78 @@ test.describe("Interacciones", () => {
     expect(href).toContain("wa.me/51981082480");
   });
 });
+
+test.describe("Libro de Reclamaciones y políticas", () => {
+  test("registro completo con ubigeo y descarga del PDF", async ({ page }) => {
+    await page.goto("/es/libro-de-reclamaciones");
+    await ready(page);
+    const form = page.getByRole("form", { name: "Libro de Reclamaciones" });
+
+    // Validación: enviar vacío muestra errores
+    await form.getByRole("button", { name: /Enviar hoja de reclamación/ }).click();
+    await expect(form.getByText("Este campo es obligatorio").first()).toBeVisible();
+
+    await form.getByLabel(/Nombres y apellidos/).fill("Consumidor de Prueba");
+    await form.getByLabel(/Tipo de documento/).selectOption("DNI");
+    await form.getByLabel(/N.° de documento/).fill("1234");
+    await form.getByLabel(/Teléfono \/ celular/).fill("987654321");
+    await form.getByLabel(/Correo electrónico/).fill("consumidor@example.com");
+    await form.getByLabel(/Domicilio/).fill("Av. Arequipa 1234");
+    await expect(form.getByLabel(/Departamento/)).toBeEnabled();
+    await form.getByLabel(/Departamento/).selectOption({ label: "AREQUIPA" });
+    await form.getByLabel(/Provincia/).selectOption({ label: "AREQUIPA" });
+    await form.getByLabel(/Distrito/).selectOption({ label: "YANAHUARA" });
+    await form.getByText("Producto", { exact: true }).click();
+    await form.getByLabel(/Descripción del producto/).fill("Cortina roller screen 5%");
+    await form.getByText("Reclamo", { exact: true }).click();
+    await form.getByLabel(/Detalle del reclamo/).fill("La cortina llegó con una medida distinta a la solicitada.");
+    await form.getByLabel(/Pedido del consumidor/).fill("Cambio de la cortina.");
+    await form.locator('input[name="declare"]').check();
+    await form.locator('input[name="consent"]').check();
+
+    // DNI inválido
+    await form.getByRole("button", { name: /Enviar hoja de reclamación/ }).click();
+    await expect(form.getByText("Número de documento inválido")).toBeVisible();
+    await form.getByLabel(/N.° de documento/).fill("45678912");
+    await form.getByRole("button", { name: /Enviar hoja de reclamación/ }).click();
+
+    await expect(page.getByText("Tu hoja de reclamación fue registrada")).toBeVisible();
+    await expect(page.getByTestId("complaint-number")).not.toBeEmpty();
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      page.getByRole("button", { name: /Descargar copia/ }).click(),
+    ]);
+    expect(download.suggestedFilename()).toMatch(/^Hoja-de-reclamacion-.+\.pdf$/);
+  });
+
+  test("API del libro valida documento y ubigeo y devuelve PDF", async ({ request }) => {
+    const base = {
+      type: "complaint", lang: "es", name: "Prueba API", docType: "RUC", docNumber: "20603899572",
+      phone: "987654321", email: "api@example.com", address: "Calle 123", ubigeo: "999999", minor: false,
+      itemType: "servicio", description: "Instalación", claimType: "queja",
+      detail: "La atención telefónica demoró demasiado.", request: "Mejorar la atención.", declare: true, consent: true,
+    };
+    const badUbigeo = await request.post("/api/complaint", { data: base });
+    expect(badUbigeo.status()).toBe(422);
+    const badDoc = await request.post("/api/complaint", { data: { ...base, ubigeo: "150122", docNumber: "123" } });
+    expect((await badDoc.json()).fields.docNumber).toBe("invalidDocument");
+    const ok = await request.post("/api/complaint", { data: { ...base, ubigeo: "150122" } });
+    const json = await ok.json();
+    expect(json.ok).toBe(true);
+    expect(Buffer.from(json.pdf, "base64").subarray(0, 5).toString()).toBe("%PDF-");
+  });
+
+  test("políticas de privacidad y seguridad, y enlaces en el footer", async ({ page }) => {
+    await page.goto("/es/privacidad");
+    await ready(page);
+    await expect(page.locator("h1")).toContainText("Política de privacidad");
+    await expect(page.getByText("D.S.").or(page.getByText("016-2024-JUS")).first()).toBeVisible();
+    await page.locator("footer").getByRole("link", { name: "Política de seguridad" }).click();
+    await expect(page).toHaveURL(/\/es\/politica-de-seguridad$/);
+    await expect(page.locator("h1")).toContainText("Política de seguridad");
+    await page.goto("/en/security-policy");
+    await expect(page.locator("h1")).toContainText("Security policy");
+    await page.goto("/en/libro-de-reclamaciones");
+    await expect(page).toHaveURL(/\/en\/complaints-book$/);
+  });
+});

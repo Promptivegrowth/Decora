@@ -8,14 +8,18 @@ import { markReady } from "@/lib/ready";
 const MIN_MS = 1500;
 const MAX_MS = 4500;
 
+const ROLL = [0.76, 0, 0.24, 1] as const;
+
 /**
  * Preloader: la pantalla es una cortina roller cerrada. Mientras carga, el isotipo
- * se "llena" de dorado y la cadena lateral avanza; al terminar, la cortina se
- * enrolla hacia arriba y descubre la web.
+ * se "llena" de dorado y la cadena avanza. Al terminar, la cadena se jala hacia
+ * abajo (la cortina cede un poco, como un roller real al destrabarse) y luego
+ * la cortina se enrolla hacia arriba y descubre la web.
  */
 export function Preloader({ label }: { label: string }) {
   const [progress, setProgress] = useState(0);
-  const [done, setDone] = useState(false);
+  const [phase, setPhase] = useState<"loading" | "pull" | "done">("loading");
+  const done = phase === "done";
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -28,7 +32,8 @@ export function Preloader({ label }: { label: string }) {
       if (finished) return;
       finished = true;
       setProgress(100);
-      window.setTimeout(() => setDone(true), reduce ? 0 : 380);
+      if (reduce) setPhase("done");
+      else window.setTimeout(() => setPhase("pull"), 260);
     };
 
     const tick = () => {
@@ -76,8 +81,14 @@ export function Preloader({ label }: { label: string }) {
           aria-live="polite"
           aria-label={label}
           className="fixed inset-0 z-[200] flex items-center justify-center bg-navy text-cream"
+          initial={false}
+          animate={phase === "pull" ? { y: [0, 0, 26, 0] } : { y: 0 }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 1.05, ease: [0.76, 0, 0.24, 1] }}
+          transition={
+            phase === "pull"
+              ? { duration: 1.2, times: [0, 0.2, 0.62, 1], ease: ["linear", "easeIn", "easeOut"] }
+              : { duration: 1.05, ease: ROLL }
+          }
         >
           {/* Lamas sutiles del tejido */}
           <div className="slats pointer-events-none absolute inset-0 text-cream/40" aria-hidden />
@@ -128,18 +139,30 @@ export function Preloader({ label }: { label: string }) {
             <p className="eyebrow mt-4 text-cream/50">{label}</p>
           </div>
 
-          {/* Cadena de accionamiento */}
-          <div
+          {/* Cadena de accionamiento: avanza con la carga y al final se jala hacia abajo */}
+          <motion.div
             aria-hidden
-            className="absolute top-0 right-[8%] h-[62%] w-[3px] sm:right-[12%]"
+            className="absolute -top-40 right-[8%] h-[calc(62%+10rem)] w-[3px] sm:right-[12%]"
+            initial={false}
+            animate={phase === "pull" ? { y: [0, -14, 190, 150] } : { y: 0 }}
+            transition={
+              phase === "pull"
+                ? { duration: 1.2, times: [0, 0.2, 0.62, 1], ease: ["easeOut", "easeIn", "easeOut"] }
+                : { duration: 0.3 }
+            }
+            onAnimationComplete={() => phase === "pull" && setPhase("done")}
             style={{
               backgroundImage: "radial-gradient(circle, var(--color-gold) 1.2px, transparent 1.6px)",
               backgroundSize: "3px 9px",
               backgroundPositionY: `${progress * 1.8}px`,
             }}
           >
-            <span className="absolute -bottom-3 left-1/2 h-4 w-2 -translate-x-1/2 rounded-full bg-gold" />
-          </div>
+            {/* Contrapeso / tirador */}
+            <span className="absolute -bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center">
+              <span className="h-2 w-[3px] bg-gold" />
+              <span className="h-6 w-3 rounded-full bg-gold shadow-[0_0_18px_rgb(218_179_111/0.45)]" />
+            </span>
+          </motion.div>
 
           {/* Barra inferior (contrapeso del roller) */}
           <div className="absolute inset-x-0 bottom-0 h-2 bg-gold" aria-hidden />

@@ -19,6 +19,13 @@ export const site = {
   /** Correo corporativo visible en la web (el de cPanel). Se define con NEXT_PUBLIC_CONTACT_EMAIL. */
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
 
+  /**
+   * Datos fiscales del proveedor: obligatorios en la Hoja de Reclamación (Libro de Reclamaciones).
+   * Tomados de registros públicos de SUNAT (verificar ante cualquier cambio).
+   */
+  ruc: process.env.NEXT_PUBLIC_RUC ?? "20603899572",
+  fiscalAddress: process.env.NEXT_PUBLIC_FISCAL_ADDRESS ?? "Av. Coronel José Leal N.° 282, Lince, Lima, Perú",
+
   /** Dirección y horario: completar cuando se confirmen */
   address: "",
   mapsUrl: "",

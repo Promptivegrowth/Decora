@@ -16,6 +16,8 @@ export const routes = {
   distributors: { es: "quiero-ser-distribuidor", en: "become-a-distributor" },
   contact: { es: "contacto", en: "contact" },
   privacy: { es: "privacidad", en: "privacy" },
+  security: { es: "politica-de-seguridad", en: "security-policy" },
+  complaints: { es: "libro-de-reclamaciones", en: "complaints-book" },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type RouteKey = keyof typeof routes;

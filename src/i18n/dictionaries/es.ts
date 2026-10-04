@@ -24,7 +24,15 @@ const es = {
     },
     privacy: {
       title: "Política de privacidad",
-      description: "Cómo tratamos los datos personales que nos envías a través de este sitio web.",
+      description: "Cómo tratamos los datos personales que nos envías a través de este sitio web, conforme a la Ley N.° 29733.",
+    },
+    security: {
+      title: "Política de seguridad",
+      description: "Medidas que aplicamos para proteger la información que se transmite a través de nuestro sitio web.",
+    },
+    complaints: {
+      title: "Libro de Reclamaciones",
+      description: "Registra tu reclamo o queja en el Libro de Reclamaciones virtual de D'Cora Hogar Perú E.I.R.L.",
     },
   },
 
@@ -466,34 +474,235 @@ const es = {
     distributorText: "Únete a nuestra red de decoradores y distribuidores.",
     rights: "Todos los derechos reservados.",
     privacy: "Política de privacidad",
+    security: "Política de seguridad",
+    complaints: "Libro de Reclamaciones",
+    legal: "Legal",
     backTop: "Volver arriba",
   },
 
   privacy: {
     title: "Política de privacidad",
     updated: "Última actualización: octubre de 2026",
+    intro:
+      "En D'Cora Hogar respetamos tu privacidad. Esta política explica qué datos personales recopilamos a través de este sitio web, para qué los usamos, con quién los compartimos y cómo puedes ejercer tus derechos, conforme a la Ley N.° 29733, Ley de Protección de Datos Personales, y su Reglamento aprobado por Decreto Supremo N.° 016-2024-JUS.",
     sections: [
       {
+        id: "responsable",
         h: "Responsable del tratamiento",
-        p: "D'Cora Hogar Perú E.I.R.L. es responsable del tratamiento de los datos personales que nos proporcionas a través de los formularios de este sitio web, conforme a la Ley N.° 29733, Ley de Protección de Datos Personales, y su reglamento.",
+        p: [
+          "El titular del banco de datos y responsable del tratamiento es {legalName}, con RUC {ruc} y domicilio fiscal en {address}.",
+          "Para cualquier consulta sobre privacidad puedes escribirnos por nuestros canales de contacto o por WhatsApp al {phone}.",
+        ],
       },
       {
+        id: "datos",
         h: "Datos que recopilamos",
-        p: "Nombre, datos de contacto (teléfono y correo electrónico), ciudad, empresa y la información que decidas incluir en tu mensaje o solicitud de cotización.",
+        lead: ["Solo recopilamos los datos que nos proporcionas voluntariamente o que son necesarios para el funcionamiento seguro del sitio:"],
+        list: [
+          "Datos de identificación y contacto: nombre, teléfono, correo electrónico, ciudad, empresa o marca.",
+          "Datos de la solicitud: mensajes, productos de interés, cotizaciones y postulaciones como distribuidor.",
+          "Datos del Libro de Reclamaciones: tipo y número de documento de identidad, domicilio, ubigeo, detalle del reclamo o queja y, si corresponde, datos del padre, madre o apoderado.",
+          "Datos técnicos: dirección IP y datos de navegación, utilizados únicamente con fines de seguridad y prevención de abusos.",
+        ],
       },
       {
-        h: "Finalidad",
-        p: "Utilizamos tus datos únicamente para responder tus consultas, enviarte cotizaciones, evaluar tu postulación como distribuidor y mantener la relación comercial contigo.",
+        id: "finalidades",
+        h: "Finalidades del tratamiento",
+        list: [
+          "Atender tus consultas y enviarte cotizaciones.",
+          "Evaluar tu postulación como distribuidor o decorador y comunicarnos contigo.",
+          "Registrar, atender y responder tus reclamos y quejas conforme al Código de Protección y Defensa del Consumidor (Ley N.° 29571).",
+          "Gestionar la relación comercial y cumplir obligaciones legales.",
+          "Mantener la seguridad del sitio web y prevenir el spam y el fraude.",
+        ],
+        p: ["No utilizamos tus datos para fines distintos sin tu consentimiento ni tomamos decisiones automatizadas sobre ti."],
       },
       {
-        h: "Conservación y seguridad",
-        p: "Conservamos tus datos durante el tiempo necesario para atender tu solicitud y la relación comercial, aplicando medidas de seguridad razonables para protegerlos.",
+        id: "consentimiento",
+        h: "Consentimiento y base legal",
+        p: [
+          "Al marcar la casilla de aceptación en nuestros formularios otorgas tu consentimiento libre, previo, expreso, informado e inequívoco para el tratamiento de tus datos según esta política. Puedes revocarlo en cualquier momento.",
+          "Los datos registrados en el Libro de Reclamaciones se tratan en cumplimiento de una obligación legal.",
+        ],
       },
       {
+        id: "destinatarios",
+        h: "Destinatarios y transferencias",
+        p: [
+          "No vendemos ni cedemos tus datos a terceros con fines comerciales. Para operar el sitio trabajamos con proveedores tecnológicos que actúan como encargados del tratamiento: el servicio de alojamiento web (Vercel Inc., Estados Unidos) y el proveedor de nuestro correo corporativo. Esto puede implicar un flujo transfronterizo de datos, que se realiza con garantías adecuadas de seguridad y confidencialidad.",
+          "Podemos compartir información con autoridades competentes, como el INDECOPI, cuando la ley lo exija.",
+        ],
+      },
+      {
+        id: "conservacion",
+        h: "Plazo de conservación",
+        list: [
+          "Consultas y cotizaciones: hasta dos (2) años desde el último contacto.",
+          "Postulaciones de distribuidores: durante la evaluación y hasta un (1) año después.",
+          "Hojas de reclamación: como mínimo dos (2) años desde su registro, según la normativa del Libro de Reclamaciones.",
+        ],
+        p: ["Cumplidos estos plazos, los datos se eliminan o anonimizan de forma segura."],
+      },
+      {
+        id: "derechos",
         h: "Tus derechos",
-        p: "Puedes ejercer tus derechos de acceso, rectificación, cancelación y oposición escribiéndonos a través de nuestros canales de contacto.",
+        p: [
+          "Puedes ejercer tus derechos de información, acceso, rectificación, cancelación, oposición y los demás reconocidos por la Ley N.° 29733 enviando tu solicitud por nuestros canales de contacto, adjuntando una copia de tu documento de identidad. Responderemos dentro de los plazos legales.",
+          "Si consideras que no hemos atendido tu solicitud, puedes acudir a la Autoridad Nacional de Protección de Datos Personales del Ministerio de Justicia y Derechos Humanos.",
+        ],
+      },
+      {
+        id: "cookies",
+        h: "Cookies y almacenamiento local",
+        p: [
+          "Este sitio no usa cookies publicitarias ni de rastreo. Solo utilizamos una cookie funcional para recordar tu idioma (NEXT_LOCALE) y el almacenamiento local de tu navegador para conservar tu lista de cotización. Puedes eliminarlos desde la configuración de tu navegador.",
+        ],
+      },
+      {
+        id: "menores",
+        h: "Menores de edad",
+        p: [
+          "Nuestros servicios están dirigidos a personas mayores de edad. Si un menor de edad desea registrar un reclamo, debe hacerlo junto a su padre, madre o apoderado, cuyos datos se consignan en la hoja de reclamación.",
+        ],
+      },
+      {
+        id: "cambios",
+        h: "Cambios a esta política",
+        p: ["Podemos actualizar esta política para reflejar cambios normativos u operativos. La fecha de la última actualización figura al inicio de esta página."],
       },
     ],
+  },
+
+  security: {
+    title: "Política de seguridad",
+    updated: "Última actualización: octubre de 2026",
+    intro:
+      "La seguridad de la información de nuestros clientes, decoradores y distribuidores es parte de nuestro compromiso de confianza. Esta política describe las medidas técnicas y organizativas que aplicamos para proteger la confidencialidad, integridad y disponibilidad de la información que se transmite a través de este sitio web.",
+    sections: [
+      {
+        id: "cifrado",
+        h: "Conexión cifrada",
+        p: ["Todo el sitio funciona exclusivamente mediante HTTPS con cifrado TLS, de modo que la información que envías viaja protegida entre tu navegador y nuestros servidores."],
+      },
+      {
+        id: "infraestructura",
+        h: "Infraestructura y alojamiento",
+        p: [
+          "El sitio se aloja en una plataforma en la nube con red de distribución global, protección ante ataques de denegación de servicio y actualizaciones de seguridad permanentes.",
+          "Los formularios no almacenan tus datos en bases de datos públicas: la información se envía directamente a nuestro correo corporativo mediante un servidor SMTP autenticado y cifrado.",
+        ],
+      },
+      {
+        id: "formularios",
+        h: "Protección de formularios",
+        list: [
+          "Validación de la información tanto en tu navegador como en el servidor.",
+          "Controles anti-spam y límites de envíos para prevenir abusos automatizados.",
+          "Cabeceras de seguridad que protegen contra la carga del sitio en marcos externos y otros ataques comunes.",
+          "Nunca solicitamos contraseñas, datos de tarjetas ni pagos a través de este sitio web.",
+        ],
+      },
+      {
+        id: "acceso",
+        h: "Acceso restringido y confidencialidad",
+        p: [
+          "Solo el personal autorizado de D'Cora Hogar accede a la información recibida, y únicamente para las finalidades descritas en nuestra Política de privacidad. Las credenciales técnicas se guardan en entornos protegidos y no se exponen en el código del sitio.",
+        ],
+      },
+      {
+        id: "fraude",
+        h: "Prevención de fraude y suplantación",
+        p: [
+          "D'Cora Hogar solo se comunica por sus canales oficiales: este sitio web, el WhatsApp comercial {phone} y nuestro correo corporativo. No te pediremos pagos ni datos bancarios por canales no oficiales. Si recibes un mensaje sospechoso a nombre de la empresa, no respondas y repórtalo a nuestros canales de contacto.",
+        ],
+      },
+      {
+        id: "incidentes",
+        h: "Gestión de incidentes",
+        p: [
+          "Ante un incidente de seguridad que pudiera afectar datos personales, adoptaremos de inmediato las medidas para contenerlo y, cuando corresponda, lo comunicaremos a la Autoridad Nacional de Protección de Datos Personales y a las personas afectadas, conforme a la normativa vigente.",
+        ],
+      },
+      {
+        id: "reporte",
+        h: "Reporte de vulnerabilidades",
+        p: ["Si detectas una posible vulnerabilidad en este sitio, te agradeceremos informarnos de forma responsable a través de nuestros canales de contacto, sin explotarla ni divulgarla públicamente."],
+      },
+      {
+        id: "usuario",
+        h: "Recomendaciones para ti",
+        list: [
+          "Verifica que la dirección del sitio sea la oficial y que el navegador muestre el candado de conexión segura.",
+          "Mantén actualizado tu navegador y sistema operativo.",
+          "No compartas información sensible por canales no oficiales.",
+        ],
+      },
+    ],
+  },
+
+  complaints: {
+    hero: {
+      eyebrow: "Atención al consumidor",
+      title: "Libro de Reclamaciones",
+      text: "Conforme a lo establecido en el Código de Protección y Defensa del Consumidor (Ley N.° 29571), ponemos a tu disposición nuestro Libro de Reclamaciones virtual.",
+    },
+    provider: { title: "Datos del proveedor", legalName: "Razón social", ruc: "RUC", address: "Domicilio fiscal" },
+    sheet: "Hoja de reclamación",
+    sheetAuto: "se asigna al enviar",
+    date: "Fecha",
+    s1: "Identificación del consumidor reclamante",
+    s2: "Identificación del bien contratado",
+    s3: "Detalle de la reclamación y pedido del consumidor",
+    fields: {
+      name: "Nombres y apellidos",
+      docType: "Tipo de documento",
+      docTypes: [
+        { value: "DNI", label: "DNI" },
+        { value: "CE", label: "Carné de extranjería" },
+        { value: "PASAPORTE", label: "Pasaporte" },
+        { value: "RUC", label: "RUC" },
+      ],
+      docNumber: "N.° de documento",
+      phone: "Teléfono / celular",
+      email: "Correo electrónico",
+      address: "Domicilio (dirección)",
+      department: "Departamento",
+      province: "Provincia",
+      district: "Distrito",
+      minor: "Soy menor de edad",
+      guardian: "Nombre del padre, madre o apoderado",
+      itemType: "Tipo de bien",
+      itemTypes: [
+        { value: "producto", label: "Producto" },
+        { value: "servicio", label: "Servicio" },
+      ],
+      amount: "Monto reclamado (S/) — opcional",
+      orderRef: "N.° de pedido o comprobante — opcional",
+      description: "Descripción del producto o servicio",
+      claimType: "Tipo de solicitud",
+      reclamo: "Reclamo",
+      reclamoText: "Disconformidad relacionada a los productos o servicios.",
+      queja: "Queja",
+      quejaText: "Disconformidad no relacionada a los productos o servicios, o malestar respecto a la atención al público.",
+      detail: "Detalle del reclamo o queja",
+      request: "Pedido del consumidor",
+      declare: "Declaro que la información proporcionada es verdadera.",
+    },
+    invalidDocument: "Número de documento inválido",
+    notes: [
+      "La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para interponer una denuncia ante el INDECOPI.",
+      "El proveedor deberá dar respuesta al reclamo o queja en un plazo no mayor a quince (15) días hábiles improrrogables.",
+      "Recibirás una copia de tu hoja de reclamación en PDF en el correo electrónico que indiques.",
+    ],
+    submit: "Enviar hoja de reclamación",
+    loading: "Cargando…",
+    success: {
+      title: "Tu hoja de reclamación fue registrada",
+      number: "Hoja de reclamación N.°",
+      text: "Enviamos una copia en PDF a tu correo electrónico. Te responderemos en un plazo máximo de 15 días hábiles.",
+      download: "Descargar copia (PDF)",
+      again: "Registrar otra hoja",
+    },
   },
 
   notFound: {

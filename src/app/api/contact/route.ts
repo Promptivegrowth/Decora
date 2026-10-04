@@ -1,21 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { validateLead } from "@/lib/forms";
 import { buildEmail, mailConfigured, sendLead } from "@/lib/mailer";
+import { clientIp, rateLimited } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
-
-// Límite básico por IP (por instancia): 6 envíos cada 10 minutos
-const WINDOW_MS = 10 * 60 * 1000;
-const MAX_HITS = Number(process.env.RATE_LIMIT_MAX ?? 6);
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_HITS;
-}
 
 export async function POST(request: NextRequest) {
   let body: unknown;
@@ -30,8 +18,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  if (rateLimited(ip)) {
+  if (rateLimited(`contact:${clientIp(request.headers)}`)) {
     return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
   }
 
