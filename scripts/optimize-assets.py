@@ -17,7 +17,7 @@ from pathlib import Path
 import fitz  # PyMuPDF
 import imageio_ffmpeg
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 LOGOS = ROOT / "logos"
@@ -152,11 +152,6 @@ def build_brandboard_photos():
     pdf = fitz.open(ROOT / "Brandboard_Dcora Hogar.pdf")
     page = pdf[0]
     imgs = page.get_images(full=True)
-    # Banner superior: rollers sobre ventanas verdes (se renderiza la zona del PDF en alta)
-    pix = page.get_pixmap(dpi=216, clip=fitz.Rect(0, 0, 800, 541))
-    im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
-    im.thumbnail((1600, 1600), Image.LANCZOS)
-    save_webp(im, IMAGES / "rollers-ventanas.webp", quality=84)
     tmp = IMAGES / "_tmp.png"
     # img4: tira con 3 fotos (oficina, fachada, almacén)
     raw = pdf.extract_image(imgs[4][0])
@@ -187,20 +182,12 @@ def build_video_photos():
     J, M = VIDEO_JOEL, VIDEO_COMERCIAL
     # (fuente, segundo, caja de recorte en 1080x1920, nombre)
     shots = [
-        (M, 21.5, (0, 452, 1080, 1430), "taller-corte"),
-        (M, 27.5, (0, 452, 1080, 1430), "capacitacion"),
         (M, 14.3, (0, 452, 1080, 1430), "cotizacion"),
-        (M, 24.5, (0, 452, 1080, 1430), "equipo-dcora"),
         (M, 11.4, (0, 452, 1080, 1430), "medidas"),
         (M, 12.6, (0, 452, 1080, 1430), "muestrario"),
         (M, 38.6, (0, 452, 1080, 1430), "oficina"),
-        (M, 19.5, (0, 600, 1080, 1920), "mariela"),
         (J, 25.3, (0, 0, 1080, 1130), "almacen"),
         (J, 13.5, (0, 340, 1080, 1150), "mostrador"),
-        (J, 16.3, (0, 340, 1080, 1150), "seleccion-rollos"),
-        (J, 30.4, (0, 300, 1080, 1650), "fabricacion"),
-        (J, 33.5, (0, 340, 1080, 1150), "joel"),
-        (J, 28.5, (0, 1250, 1080, 1920), "taller-fabricacion"),
     ]
     for src, t, box, name in shots:
         im = frame(src, t).crop(box)
@@ -252,6 +239,35 @@ def build_videos():
     lst.unlink()
 
 
+REAL = ROOT / "fotos reales"
+REAL_OUT = IMAGES / "reales"
+
+
+def build_real_photos():
+    """Fotos profesionales de la empresa (carpeta 'fotos reales') → WebP optimizado."""
+    print("Fotos reales")
+    REAL_OUT.mkdir(parents=True, exist_ok=True)
+    shots = {
+        "1. FOTO DE APOYO PARA EL SITIO WEB.png": "camiseta-rack",
+        "2. FOTO DE APOYO PARA EL SITIO WEB.png": "taller-mesa",
+        "3. FOTO DE APOYO PARA EL SITIO WEB.png": "corte-telas",
+        "4. FOTO DE APOYO PARA EL SITIO WEB.png": "stock-telas",
+        "5. FOTO DE APOYO PARA EL SITIO WEB.png": "corte-perfiles",
+        "FOTO GRUPAL DEL LADO COMERCIAL ADMINISTRATIVO.png": "equipo-comercial",
+        "FOTO GRUPAL DEL TALLER DE OPERACIONES.png": "equipo-taller",
+        "JOEL + LOGO.png": "joel-logo",
+        "JOEL + MARIEL - FOTO DÚO + LOGO.png": "fundadores",
+        "JOEL - GERENTE DE OPERACIONES - FOTO PERSONAL PROFESIONAL.png": "joel-retrato",
+        "MARIELA + LOGO.png": "mariela-logo",
+        "MARIELA - GERENTE ADMINISTRATIVA - FOTO PROFESIONAL PERSONAL.png": "mariela-retrato",
+    }
+    for src, name in shots.items():
+        im = Image.open(REAL / src)
+        im = ImageOps.exif_transpose(im).convert("RGB")
+        im.thumbnail((1600, 1600), Image.LANCZOS)
+        save_webp(im, REAL_OUT / f"{name}.webp", quality=80)
+
+
 def build_pdf_logo():
     """Logo horizontal en PNG embebido como base64 para el PDF del Libro de Reclamaciones."""
     import base64, io
@@ -275,6 +291,7 @@ if __name__ == "__main__":
     os.chdir(ROOT)
     build_logos()
     build_pdf_logo()
+    build_real_photos()
     build_icons()
     build_brandboard_photos()
     build_video_photos()

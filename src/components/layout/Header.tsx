@@ -372,7 +372,7 @@ function SolutionsPanel({ lang, nav }: { lang: Locale; nav: Dictionary["nav"] })
         className="group relative col-span-4 flex min-h-[290px] flex-col justify-end overflow-hidden rounded-2xl bg-teal p-7 text-cream"
       >
         <Image
-          src="/images/taller-corte.webp"
+          src="/images/reales/corte-perfiles.webp"
           alt=""
           fill
           sizes="400px"
@@ -427,7 +427,7 @@ function AboutPanel({ lang, nav }: { lang: Locale; nav: Dictionary["nav"] }) {
         ))}
       </ul>
       <div className="relative col-span-3 overflow-hidden rounded-2xl">
-        <Image src="/images/fachada.webp" alt="" fill sizes="320px" className="object-cover" />
+        <Image src="/images/reales/fundadores.webp" alt="" fill sizes="320px" className="object-cover object-[50%_62%]" />
       </div>
     </div>
   );

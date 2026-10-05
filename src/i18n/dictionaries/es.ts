@@ -213,12 +213,25 @@ const es = {
       title: "Una operación real, lista para respaldarte",
       items: [
         "Nuestra tienda",
+        "Stock de telas importadas",
         "Showroom",
-        "Almacén de telas",
-        "Taller de corte",
-        "Atención al distribuidor",
+        "Corte de perfiles",
+        "Corte de telas",
         "Fabricación a medida",
+        "Almacén",
       ],
+    },
+    team: {
+      eyebrow: "Nuestro equipo",
+      title: "Personas reales detrás de cada roller",
+      text: "Un equipo comercial que te atiende de forma directa y un taller que fabrica cada pedido a medida, liderados por una gerencia cercana.",
+      leaders: "Gerencia",
+      leadersNames: "Joel Gonzales y Mariela",
+      groups: [
+        { title: "Equipo comercial y administrativo", text: "Atención directa, asesoría y seguimiento de cada pedido." },
+        { title: "Equipo de taller y operaciones", text: "Corte, armado y control de calidad de cada roller." },
+      ],
+      cta: "Conocer al equipo",
     },
     cta: {
       eyebrow: "Escríbenos: “Quiero emprender”",
@@ -244,6 +257,7 @@ const es = {
         "Hoy iniciamos una nueva etapa de la marca, en la que seguimos creciendo para acompañar a nuestros decoradores y distribuidores en cada proyecto.",
       ],
       highlight: "Seguimos creciendo, y lo hacemos de la mano de ustedes.",
+      caption: "Joel Gonzales y Mariela, gerencia de D'Cora Hogar",
     },
     purpose: {
       eyebrow: "Propósito",

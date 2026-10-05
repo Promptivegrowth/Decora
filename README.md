@@ -92,6 +92,17 @@ Al enviarla, `/api/complaint` genera la **hoja en PDF** y la envía por correo *
 | Teléfono, WhatsApp, dirección, horario, redes | `src/data/site.ts` |
 | Rutas localizadas (`/es/nosotros` ↔ `/en/about`) | `src/i18n/config.ts` |
 
+### Fotos de la empresa
+
+Las fotos profesionales originales se guardan en la carpeta `fotos reales/`, que no se sube al repositorio. `npm run assets` genera sus versiones WebP optimizadas en `public/images/reales/`. Así se usan en la web:
+
+| Foto | Uso |
+| --- | --- |
+| `fundadores` | Gerencia (Joel y Mariela): sección Equipo, historia y megamenú |
+| `joel-retrato`, `mariela-retrato` | Tarjetas de gerencia en Nosotros y cita del programa de distribuidores |
+| `equipo-comercial`, `equipo-taller` | Equipos en Inicio y Nosotros, contacto y distribuidores |
+| `stock-telas`, `camiseta-rack`, `taller-mesa`, `corte-telas`, `corte-perfiles` | Proceso, galería, catálogo y megamenú |
+
 ### Fotos de productos
 
 Cada producto tiene una ilustración generada en los colores de marca. Las telas se muestran como un roller con su textura y color reales. Cuando lleguen las fotos:

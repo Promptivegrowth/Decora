@@ -10,6 +10,7 @@ import { Pitch } from "@/components/home/Pitch";
 import { Process } from "@/components/home/Process";
 import { VideoStory } from "@/components/home/VideoStory";
 import { Gallery } from "@/components/home/Gallery";
+import { Team } from "@/components/home/Team";
 import { FinalCta } from "@/components/home/FinalCta";
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
@@ -32,6 +33,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <LightLab lang={lang} t={h.lab} />
       <Pitch lang={lang} t={h.pitch} />
       <Process t={h.process} />
+      <Team lang={lang} t={h.team} />
       <VideoStory t={h.videos} common={dict.common} />
       <Gallery t={h.gallery} />
       <FinalCta lang={lang} t={h.cta} whatsappMessage={dict.common.whatsappDistributor} />

@@ -18,20 +18,23 @@ export function Pitch({ lang, t }: { lang: Locale; t: Dictionary["home"]["pitch"
             <SectionHeading eyebrow={t.eyebrow} title={t.title} text={t.text} tone="light" />
             <Reveal delay={0.2}>
               <figure className="relative mt-10 overflow-hidden rounded-2xl bg-teal p-7">
-                <Image
-                  src="/images/mariela.webp"
-                  alt=""
-                  width={1080}
-                  height={1320}
-                  sizes="160px"
-                  className="absolute top-0 right-0 h-full w-32 object-cover object-top opacity-60 sm:w-40"
-                />
-                <span className="absolute inset-0 bg-gradient-to-r from-teal via-teal to-teal/30" aria-hidden />
-                <Quote className="relative h-7 w-7 text-gold" />
-                <blockquote className="relative mt-3 max-w-[22rem] text-[0.95rem] leading-relaxed text-cream/90">
-                  {t.quote}
-                </blockquote>
-                <figcaption className="eyebrow relative mt-4 text-gold">{t.quoteBy}</figcaption>
+                <Quote className="h-7 w-7 text-gold" />
+                <blockquote className="mt-3 text-[0.95rem] leading-relaxed text-cream/90">{t.quote}</blockquote>
+                <figcaption className="mt-6 flex items-center gap-4 border-t border-cream/15 pt-5">
+                  <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-gold">
+                    <Image
+                      src="/images/reales/mariela-retrato.webp"
+                      alt=""
+                      fill
+                      sizes="128px"
+                      className="origin-[50%_20%] scale-[1.8] object-cover object-[50%_20%]"
+                    />
+                  </span>
+                  <span>
+                    <span className="block font-display font-bold text-cream">Mariela</span>
+                    <span className="eyebrow mt-0.5 block text-gold">{t.quoteBy}</span>
+                  </span>
+                </figcaption>
               </figure>
             </Reveal>
             <Reveal delay={0.25}>

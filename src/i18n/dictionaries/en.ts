@@ -209,7 +209,27 @@ const en: Dictionary = {
     gallery: {
       eyebrow: "Inside D'Cora",
       title: "A real operation, ready to back you",
-      items: ["Our store", "Showroom", "Fabric warehouse", "Cutting workshop", "Distributor service", "Made to measure"],
+      items: [
+        "Our store",
+        "Imported fabric stock",
+        "Showroom",
+        "Profile cutting",
+        "Fabric cutting",
+        "Made to measure",
+        "Warehouse",
+      ],
+    },
+    team: {
+      eyebrow: "Our team",
+      title: "Real people behind every roller",
+      text: "A sales team that serves you directly and a workshop that makes every order to measure, led by a hands-on management team.",
+      leaders: "Management",
+      leadersNames: "Joel Gonzales and Mariela",
+      groups: [
+        { title: "Sales & administration team", text: "Direct service, advice and follow-up on every order." },
+        { title: "Workshop & operations team", text: "Cutting, assembly and quality control of every roller." },
+      ],
+      cta: "Meet the team",
     },
     cta: {
       eyebrow: "Message us: “I want to start”",
@@ -235,6 +255,7 @@ const en: Dictionary = {
         "Today we are starting a new chapter for the brand, as we keep growing to support our decorators and distributors on every project.",
       ],
       highlight: "We keep growing, and we do it hand in hand with you.",
+      caption: "Joel Gonzales and Mariela, D'Cora Hogar management",
     },
     purpose: {
       eyebrow: "Purpose",

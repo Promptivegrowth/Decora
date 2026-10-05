@@ -19,11 +19,11 @@ export function Audience({ lang, t }: { lang: Locale; t: Dictionary["home"]["aud
               className="group relative flex h-full min-h-[520px] flex-col justify-end overflow-hidden rounded-[2rem] bg-teal p-7 text-cream sm:p-10"
             >
               <Image
-                src="/images/capacitacion.webp"
+                src="/images/reales/equipo-comercial.webp"
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-cover opacity-50 transition-transform duration-[1.6s] ease-out group-hover:scale-105"
+                className="object-cover object-[65%_80%] opacity-50 transition-transform duration-[1.6s] ease-out group-hover:scale-105"
               />
               <span className="absolute inset-0 bg-gradient-to-t from-teal via-teal/80 to-teal/10" aria-hidden />
               {/* Cortina que baja al pasar el cursor */}

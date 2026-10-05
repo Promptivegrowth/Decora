@@ -29,7 +29,7 @@ export default async function ProductsPage({ params }: PageProps<"/[lang]/produc
         eyebrow={d.products.hero.eyebrow}
         title={d.products.hero.title}
         text={d.products.hero.text}
-        image="/images/almacen-rollos.webp"
+        image="/images/reales/stock-telas.webp"
         crumbs={[{ label: d.nav.home, href: href(lang, "home") }, { label: d.nav.solutions }]}
       />
       <Suspense fallback={<div className="min-h-[60vh]" />}>

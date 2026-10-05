@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/quiero-ser
   };
 }
 
-const challengeImages = ["/images/medidas.webp", "/images/muestrario.webp", "/images/cotizacion.webp", "/images/taller-corte.webp"];
+const challengeImages = ["/images/medidas.webp", "/images/muestrario.webp", "/images/cotizacion.webp", "/images/reales/taller-mesa.webp"];
 const whoIcons = [Palette, Store, Hammer, Rocket, Building2];
 
 export default async function DistributorsPage({ params }: PageProps<"/[lang]/quiero-ser-distribuidor">) {
@@ -52,7 +52,7 @@ export default async function DistributorsPage({ params }: PageProps<"/[lang]/qu
         eyebrow={t.hero.eyebrow}
         title={t.hero.title}
         text={t.hero.text}
-        image="/images/capacitacion.webp"
+        image="/images/reales/corte-telas.webp"
         crumbs={[{ label: d.nav.home, href: href(lang, "home") }, { label: d.nav.distributor }]}
       >
         <div className="mt-9 flex flex-wrap gap-3">
@@ -180,7 +180,7 @@ export default async function DistributorsPage({ params }: PageProps<"/[lang]/qu
             </Reveal>
             <Reveal delay={0.2}>
               <div className="relative mt-5 hidden aspect-[4/3] overflow-hidden rounded-2xl lg:block">
-                <Image src="/images/oficina.webp" alt="" fill sizes="30vw" className="object-cover" />
+                <Image src="/images/reales/equipo-comercial.webp" alt="" fill sizes="30vw" className="object-cover" />
               </div>
             </Reveal>
           </div>

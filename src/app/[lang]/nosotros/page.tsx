@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Compass, Handshake, Heart, ShieldCheck, Sparkles, Target, Timer, TrendingUp } from "lucide-react";
+import { Compass, Handshake, Heart, Quote, ShieldCheck, Sparkles, Target, Timer, TrendingUp } from "lucide-react";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { PageHero } from "@/components/ui/PageHero";
@@ -42,7 +42,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
         eyebrow={a.hero.eyebrow}
         title={a.hero.title}
         text={a.hero.text}
-        image="/images/fachada.webp"
+        image="/images/reales/equipo-taller.webp"
         crumbs={[{ label: d.nav.home, href: href(lang, "home") }, { label: d.nav.about }]}
       />
 
@@ -65,15 +65,28 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
             </Reveal>
           </div>
           <div className="relative lg:col-span-6">
-            <div className="grid grid-cols-2 gap-4">
-              <ShadeReveal className="col-span-2 aspect-[16/10] rounded-[1.75rem]">
-                <Image src="/images/mostrador.webp" alt={a.story.eyebrow} fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+            <div className="grid grid-cols-5 gap-4">
+              <figure className="relative col-span-3 row-span-2">
+                <ShadeReveal className="aspect-[3/4.4] h-full rounded-[1.75rem]">
+                  <Image
+                    src="/images/reales/fundadores.webp"
+                    alt={a.story.caption}
+                    fill
+                    sizes="(max-width:1024px) 60vw, 30vw"
+                    className="object-cover object-[50%_60%]"
+                  />
+                  <span className="absolute inset-0 bg-gradient-to-t from-navy/85 via-transparent to-transparent" aria-hidden />
+                </ShadeReveal>
+                <figcaption className="absolute inset-x-5 bottom-5 flex items-start gap-2 text-sm font-semibold text-cream">
+                  <span className="mt-2.5 h-px w-5 shrink-0 bg-gold" aria-hidden />
+                  {a.story.caption}
+                </figcaption>
+              </figure>
+              <ShadeReveal className="col-span-2 aspect-[3/4] rounded-[1.5rem]" delay={0.1} shade="bg-navy">
+                <Image src="/images/showroom.webp" alt="Showroom D'Cora Hogar" fill sizes="20vw" className="object-cover" />
               </ShadeReveal>
-              <ShadeReveal className="aspect-square rounded-[1.5rem]" delay={0.1} shade="bg-navy">
-                <Image src="/images/showroom.webp" alt="Showroom D'Cora Hogar" fill sizes="25vw" className="object-cover" />
-              </ShadeReveal>
-              <ShadeReveal className="aspect-square rounded-[1.5rem]" delay={0.2} shade="bg-forest">
-                <Image src="/images/equipo-dcora.webp" alt="Equipo D'Cora Hogar" fill sizes="25vw" className="object-cover" />
+              <ShadeReveal className="col-span-2 aspect-[3/4] rounded-[1.5rem]" delay={0.2} shade="bg-forest">
+                <Image src="/images/reales/camiseta-rack.webp" alt="Equipo D'Cora Hogar" fill sizes="20vw" className="object-cover object-[50%_60%]" />
               </ShadeReveal>
             </div>
           </div>
@@ -131,7 +144,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
           <div className="lg:col-span-7">
             <SectionHeading eyebrow={a.import.eyebrow} title={a.import.title} text={a.import.text} />
             <div className="mt-10 grid grid-cols-3 gap-3">
-              {["/images/seleccion-rollos.webp", "/images/almacen.webp", "/images/fabricacion.webp"].map((src, i) => (
+              {["/images/reales/stock-telas.webp", "/images/almacen.webp", "/images/reales/taller-mesa.webp"].map((src, i) => (
                 <ShadeReveal key={src} delay={i * 0.1} className="aspect-[3/4] rounded-2xl" shade={i === 1 ? "bg-navy" : "bg-teal"}>
                   <Image src={src} alt="" fill sizes="(max-width:1024px) 33vw, 20vw" className="object-cover" />
                 </ShadeReveal>
@@ -156,38 +169,56 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
       <section id="equipo" className="scroll-mt-24 py-24 sm:py-32">
         <div className="container-x">
           <SectionHeading eyebrow={a.team.eyebrow} title={a.team.title} text={a.team.text} />
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
             {a.team.members.map((m, i) => (
               <Reveal key={m.name} delay={i * 0.1}>
-                <article className="group h-full overflow-hidden rounded-[1.75rem] bg-cream ring-1 ring-navy/10">
-                  <div className="relative aspect-[4/3.6] overflow-hidden">
+                <article className="group grid h-full overflow-hidden rounded-[1.75rem] bg-teal text-cream sm:grid-cols-5">
+                  <div className="relative aspect-[4/5] overflow-hidden sm:col-span-2 sm:aspect-auto sm:min-h-[340px]">
                     <Image
-                      src={i === 0 ? "/images/mariela.webp" : "/images/joel.webp"}
+                      src={i === 0 ? "/images/reales/mariela-retrato.webp" : "/images/reales/joel-retrato.webp"}
                       alt={`${m.name}, ${m.role}`}
                       fill
-                      sizes="(max-width:1024px) 100vw, 33vw"
-                      className={`object-cover transition-transform duration-[1.4s] group-hover:scale-105 ${i === 0 ? "object-[50%_45%]" : "object-top"}`}
+                      sizes="(max-width:640px) 100vw, (max-width:1024px) 40vw, 20vw"
+                      className="object-cover object-top transition-transform duration-[1.4s] group-hover:scale-105"
                     />
-                    <span className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent" aria-hidden />
-                    <div className="absolute bottom-5 left-6 text-cream">
+                  </div>
+                  <div className="relative flex flex-col justify-between p-7 sm:col-span-3 sm:p-8">
+                    <Quote className="h-7 w-7 text-gold" aria-hidden />
+                    <p className="mt-4 leading-relaxed text-cream/85">“{m.quote}”</p>
+                    <div className="mt-6 border-t border-cream/15 pt-5">
                       <p className="font-display text-2xl font-bold">{m.name}</p>
                       <p className="eyebrow mt-1 text-gold">{m.role}</p>
                     </div>
+                    <span className="absolute inset-x-0 bottom-0 h-1.5 bg-gold" aria-hidden />
                   </div>
-                  <p className="p-6 text-[0.95rem] leading-relaxed text-navy/75 sm:p-7">“{m.quote}”</p>
                 </article>
               </Reveal>
             ))}
-            <Reveal delay={0.2}>
-              <article className="group relative flex h-full min-h-[420px] flex-col justify-end overflow-hidden rounded-[1.75rem] bg-teal p-7 text-cream">
-                <Image src="/images/taller-fabricacion.webp" alt="" fill sizes="(max-width:1024px) 100vw, 33vw" className="object-cover opacity-60 transition-transform duration-[1.4s] group-hover:scale-105" />
-                <span className="absolute inset-0 bg-gradient-to-t from-teal via-teal/70 to-transparent" aria-hidden />
-                <div className="relative">
-                  <p className="font-display text-2xl font-bold">{a.team.crew}</p>
-                  <p className="mt-2 text-cream/75">{a.team.crewText}</p>
-                </div>
-              </article>
-            </Reveal>
+          </div>
+
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {d.home.team.groups.map((g, i) => (
+              <Reveal key={g.title} delay={0.1 * i}>
+                <figure className="group relative aspect-[4/3] overflow-hidden rounded-[1.75rem] sm:aspect-[16/10]">
+                  <div className="absolute inset-0">
+                    <ShadeReveal className="h-full w-full" shade={i ? "bg-forest" : "bg-navy"} delay={0.1 * i}>
+                      <Image
+                        src={i === 0 ? "/images/reales/equipo-comercial.webp" : "/images/reales/equipo-taller.webp"}
+                        alt={g.title}
+                        fill
+                        sizes="(max-width:768px) 100vw, 50vw"
+                        className={`object-cover transition-transform duration-[1.4s] group-hover:scale-105 ${i ? "object-[50%_70%]" : "object-[50%_55%]"}`}
+                      />
+                    </ShadeReveal>
+                  </div>
+                  <span className="absolute inset-0 bg-gradient-to-b from-navy/85 via-navy/20 to-transparent" aria-hidden />
+                  <figcaption className="absolute inset-x-6 top-6 text-cream">
+                    <span className="block font-display text-xl font-bold">{g.title}</span>
+                    <span className="mt-1 hidden text-sm text-cream/75 sm:block">{g.text}</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

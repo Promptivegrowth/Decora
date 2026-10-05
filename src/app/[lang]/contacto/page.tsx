@@ -41,7 +41,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
         eyebrow={d.contact.hero.eyebrow}
         title={d.contact.hero.title}
         text={d.contact.hero.text}
-        image="/images/oficina.webp"
+        image="/images/reales/equipo-comercial.webp"
         crumbs={[{ label: d.nav.home, href: href(lang, "home") }, { label: d.nav.contact }]}
       />
 

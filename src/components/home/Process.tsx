@@ -8,10 +8,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 
 const images = [
-  "/images/seleccion-rollos.webp",
+  "/images/reales/stock-telas.webp",
   "/images/almacen.webp",
-  "/images/almacen-rollos.webp",
-  "/images/taller-corte.webp",
+  "/images/reales/camiseta-rack.webp",
+  "/images/reales/taller-mesa.webp",
   "/images/mostrador.webp",
 ];
 
