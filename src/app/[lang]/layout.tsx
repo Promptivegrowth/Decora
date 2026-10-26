@@ -39,16 +39,22 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     metadataBase: new URL(site.url),
     title: { default: dict.meta.siteTitle, template: `%s | ${site.name}` },
     description: dict.meta.siteDescription,
+    keywords: dict.meta.keywords,
     applicationName: site.name,
-    openGraph: {
-      type: "website",
-      siteName: site.name,
-      locale: lang === "es" ? "es_PE" : "en_US",
-      title: dict.meta.siteTitle,
-      description: dict.meta.siteDescription,
+    authors: [{ name: site.legalName, url: site.url }],
+    creator: site.legalName,
+    publisher: site.legalName,
+    category: "business",
+    formatDetection: { telephone: true, email: true, address: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
     },
-    twitter: { card: "summary_large_image" },
-    alternates: { languages: { es: "/es", en: "/en", "x-default": "/es" } },
+    // Google Search Console: pegar el código de verificación en Vercel (opcional)
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+      : {}),
   };
 }
 
@@ -57,22 +63,50 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
+  // Datos estructurados para Google: negocio local + sitio web
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: site.name,
-    legalName: site.legalName,
-    url: site.url,
-    logo: `${site.url}/brand/logo-dorado.webp`,
-    telephone: site.phoneDisplay,
-    ...(site.email ? { email: site.email } : {}),
-    address: { "@type": "PostalAddress", addressLocality: "Lima", addressCountry: "PE" },
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: site.phoneDisplay,
-      contactType: "sales",
-      availableLanguage: ["Spanish", "English"],
-    },
+    "@graph": [
+      {
+        "@type": ["Organization", "HomeAndConstructionBusiness"],
+        "@id": `${site.url}/#organization`,
+        name: site.name,
+        legalName: site.legalName,
+        url: site.url,
+        logo: `${site.url}/icon.png`,
+        image: `${site.url}/og/es-home.jpg`,
+        description: dict.meta.siteDescription,
+        telephone: site.phoneDisplay,
+        ...(site.email ? { email: site.email } : {}),
+        ...(site.ruc ? { taxID: site.ruc } : {}),
+        priceRange: "$$",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Av. Coronel José Leal 282",
+          addressLocality: "Lince",
+          addressRegion: "Lima",
+          addressCountry: "PE",
+        },
+        areaServed: { "@type": "Country", name: "Perú" },
+        knowsAbout: ["Cortinas roller", "Telas screen", "Telas blackout", "Cortinas dúo", "Motorización de cortinas"],
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: site.phoneDisplay,
+          contactType: "sales",
+          areaServed: "PE",
+          availableLanguage: ["Spanish", "English"],
+        },
+        sameAs: Object.values(site.social).filter(Boolean),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        url: site.url,
+        name: site.name,
+        inLanguage: lang === "es" ? "es-PE" : "en",
+        publisher: { "@id": `${site.url}/#organization` },
+      },
+    ],
   };
 
   return (

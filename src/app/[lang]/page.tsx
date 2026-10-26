@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { fabricCount, productCount } from "@/data/products";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/home/Hero";
 import { Audience } from "@/components/home/Audience";
 import { Solutions } from "@/components/home/Solutions";
@@ -13,6 +15,19 @@ import { Gallery } from "@/components/home/Gallery";
 import { Team } from "@/components/home/Team";
 import { Testimonials } from "@/components/home/Testimonials";
 import { FinalCta } from "@/components/home/FinalCta";
+
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const d = await getDictionary(lang);
+  return pageMetadata({
+    lang,
+    key: "home",
+    title: d.meta.siteTitle,
+    description: d.meta.siteDescription,
+    absoluteTitle: true,
+  });
+}
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;

@@ -5,6 +5,7 @@ import { ArrowUpRight, Building, Clock, Mail, MapPin, Phone } from "lucide-react
 import { site, whatsappLink } from "@/data/site";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
@@ -14,11 +15,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/contacto">
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
-  return {
-    title: d.meta.contact.title,
-    description: d.meta.contact.description,
-    alternates: { canonical: href(lang, "contact"), languages: { es: href("es", "contact"), en: href("en", "contact") } },
-  };
+  return pageMetadata({ lang, key: "contact", title: d.meta.contact.title, description: d.meta.contact.description });
 }
 
 export default async function ContactPage({ params }: PageProps<"/[lang]/contacto">) {

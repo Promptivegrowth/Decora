@@ -1,38 +1,50 @@
 const es = {
   meta: {
-    siteTitle: "D'Cora Hogar | Cortinas roller a medida para distribuidores",
+    siteTitle: "Cortinas roller a medida para distribuidores | D'Cora Hogar",
     siteDescription:
-      "Fabricamos cortinas roller a medida e importamos telas y componentes para decoradores y distribuidores en todo el Perú. Stock constante, precios competitivos y respaldo en cada proyecto.",
+      "Fabricamos cortinas roller a medida en Lima e importamos telas screen, blackout y dúo. Precios de distribuidor y stock constante para decoradores del Perú.",
+    keywords: [
+      "cortinas roller",
+      "cortinas roller Lima",
+      "cortinas roller a medida",
+      "distribuidor de cortinas roller",
+      "telas screen",
+      "telas blackout",
+      "cortinas dúo",
+      "accesorios para cortinas roller",
+      "D'Cora Hogar",
+    ],
     about: {
-      title: "Nosotros",
+      title: "Nosotros: empresa familiar de cortinas roller",
       description:
-        "Una empresa familiar que importa, almacena y fabrica cortinas roller a medida para respaldar a decoradores y distribuidores.",
+        "Conoce a D'Cora Hogar: empresa familiar en Lima que importa telas, mantiene stock y fabrica cortinas roller a medida para decoradores y distribuidores.",
     },
     products: {
-      title: "Soluciones y productos",
+      title: "Catálogo de telas y accesorios para roller",
       description:
-        "Telas screen, blackout, dúo y linen; mecanismos, tubos, perfilería, motorización, rieles y accesorios para cortinas roller.",
+        "Telas screen del 1% al 16%, blackout, dúo y linen; mecanismos Rolleasse y VTX, tubos de aluminio, motores, rieles y accesorios. Cotiza a precio de distribuidor.",
     },
     distributors: {
-      title: "Quiero ser distribuidor",
+      title: "Quiero ser distribuidor de cortinas roller",
       description:
-        "Vende cortinas roller sin taller ni maquinaria. Te damos capacitación inicial, atención directa y fabricamos cada pedido a medida.",
+        "Vende cortinas roller sin taller ni maquinaria. Capacitación inicial, precios de distribuidor y fabricación a medida en Lima. Postula y empieza tu negocio hoy.",
     },
     contact: {
-      title: "Contacto",
-      description: "Escríbenos por WhatsApp o déjanos tu mensaje. Atendemos a distribuidores, decoradores y clientes finales.",
+      title: "Contacto y cotizaciones de cortinas roller",
+      description:
+        "Cotiza cortinas roller a medida en Lima. Escríbenos por WhatsApp al +51 981 082 480 o envíanos tu consulta. Atendemos a distribuidores y clientes finales.",
     },
     privacy: {
       title: "Política de privacidad",
-      description: "Cómo tratamos los datos personales que nos envías a través de este sitio web, conforme a la Ley N.° 29733.",
+      description: "Cómo D'Cora Hogar trata los datos personales que recibe a través de este sitio web, conforme a la Ley N.° 29733 y su reglamento.",
     },
     security: {
       title: "Política de seguridad",
-      description: "Medidas que aplicamos para proteger la información que se transmite a través de nuestro sitio web.",
+      description: "Medidas técnicas y organizativas que D'Cora Hogar aplica para proteger la información que se transmite a través de su sitio web.",
     },
     complaints: {
       title: "Libro de Reclamaciones",
-      description: "Registra tu reclamo o queja en el Libro de Reclamaciones virtual de D'Cora Hogar Perú E.I.R.L.",
+      description: "Registra tu reclamo o queja en el Libro de Reclamaciones virtual de D'Cora Hogar Perú E.I.R.L. y recibe una copia en PDF en tu correo.",
     },
   },
 

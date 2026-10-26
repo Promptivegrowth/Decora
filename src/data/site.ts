@@ -5,11 +5,8 @@
 export const site = {
   name: "D'Cora Hogar",
   legalName: "D'Cora Hogar Perú E.I.R.L.",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000"),
+  /** Dominio oficial. NEXT_PUBLIC_SITE_URL permite sobrescribirlo (p. ej. en pruebas). */
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.dcorahogarperu.com").replace(/\/$/, ""),
   country: { es: "Lima, Perú", en: "Lima, Peru" },
 
   /** WhatsApp / teléfono comercial (visible en el letrero y uniformes de la empresa) */

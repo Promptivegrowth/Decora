@@ -2,39 +2,51 @@ import type { Dictionary } from "./es";
 
 const en: Dictionary = {
   meta: {
-    siteTitle: "D'Cora Hogar | Made-to-measure roller blinds for distributors",
+    siteTitle: "Made-to-measure roller blinds for distributors | D'Cora Hogar",
     siteDescription:
-      "We manufacture made-to-measure roller blinds and import fabrics and components for decorators and distributors across Peru. Constant stock, competitive prices and support on every project.",
+      "We make made-to-measure roller blinds in Lima and import screen, blackout and duo fabrics. Distributor pricing and constant stock for decorators across Peru.",
+    keywords: [
+      "roller blinds",
+      "roller blinds Lima",
+      "made-to-measure roller blinds",
+      "roller blind distributor Peru",
+      "screen fabrics",
+      "blackout fabrics",
+      "duo blinds",
+      "roller blind components",
+      "D'Cora Hogar",
+    ],
     about: {
-      title: "About us",
+      title: "About us: a family roller blind company",
       description:
-        "A family business that imports, stocks and manufactures made-to-measure roller blinds to back decorators and distributors.",
+        "Meet D'Cora Hogar: a family business in Lima that imports fabrics, keeps stock and manufactures made-to-measure roller blinds for decorators and distributors.",
     },
     products: {
-      title: "Solutions & products",
+      title: "Roller blind fabrics, mechanisms & parts",
       description:
-        "Screen, blackout, duo and linen fabrics; mechanisms, tubes, profiles, motorization, tracks and accessories for roller blinds.",
+        "1% to 16% screen, blackout, duo and linen fabrics; Rolleasse and VTX mechanisms, aluminium tubes, motors, tracks and accessories. Get distributor pricing.",
     },
     distributors: {
-      title: "Become a distributor",
+      title: "Become a roller blind distributor",
       description:
-        "Sell roller blinds without a workshop or machinery. We provide initial training, direct support and manufacture every order to measure.",
+        "Sell roller blinds with no workshop or machinery. Initial training, distributor pricing and made-to-measure manufacturing in Lima. Apply and start today.",
     },
     contact: {
-      title: "Contact",
-      description: "Message us on WhatsApp or leave us a note. We serve distributors, decorators and end customers.",
+      title: "Contact and roller blind quotes",
+      description:
+        "Get a quote for made-to-measure roller blinds in Lima. Message us on WhatsApp at +51 981 082 480 or send your enquiry. We serve distributors and end customers.",
     },
     privacy: {
       title: "Privacy policy",
-      description: "How we handle the personal data you send us through this website, under Peruvian Law No. 29733.",
+      description: "How D'Cora Hogar handles the personal data it receives through this website, under Peruvian Law No. 29733 and its regulations.",
     },
     security: {
       title: "Security policy",
-      description: "Measures we apply to protect the information transmitted through our website.",
+      description: "Technical and organisational measures D'Cora Hogar applies to protect the information transmitted through its website.",
     },
     complaints: {
       title: "Complaints Book",
-      description: "File your claim or complaint in the virtual Complaints Book of D'Cora Hogar Perú E.I.R.L.",
+      description: "File your claim or complaint in the virtual Complaints Book of D'Cora Hogar Perú E.I.R.L. and receive a PDF copy by email.",
     },
   },
 

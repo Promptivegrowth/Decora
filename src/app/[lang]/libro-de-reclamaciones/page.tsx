@@ -5,6 +5,7 @@ import { BookOpen, Clock, Lock, ShieldCheck } from "lucide-react";
 import { site } from "@/data/site";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { ComplaintForm } from "@/components/forms/ComplaintForm";
@@ -13,14 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/libro-de-r
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
-  return {
-    title: d.meta.complaints.title,
-    description: d.meta.complaints.description,
-    alternates: {
-      canonical: href(lang, "complaints"),
-      languages: { es: href("es", "complaints"), en: href("en", "complaints") },
-    },
-  };
+  return pageMetadata({ lang, key: "complaints", title: d.meta.complaints.title, description: d.meta.complaints.description });
 }
 
 export default async function ComplaintsPage({ params }: PageProps<"/[lang]/libro-de-reclamaciones">) {

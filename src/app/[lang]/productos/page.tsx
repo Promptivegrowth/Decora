@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { Catalog } from "@/components/products/Catalog";
 import { LightLab } from "@/components/home/LightLab";
@@ -12,11 +13,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/productos"
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
-  return {
-    title: d.meta.products.title,
-    description: d.meta.products.description,
-    alternates: { canonical: href(lang, "products"), languages: { es: href("es", "products"), en: href("en", "products") } },
-  };
+  return pageMetadata({ lang, key: "products", title: d.meta.products.title, description: d.meta.products.description });
 }
 
 export default async function ProductsPage({ params }: PageProps<"/[lang]/productos">) {

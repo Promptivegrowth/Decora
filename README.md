@@ -83,6 +83,15 @@ Al enviarla, `/api/complaint` genera la **hoja en PDF** y la envía por correo *
 - `/es/privacidad`: política de privacidad (Ley N.° 29733 y D.S. N.° 016-2024-JUS)
 - `/es/politica-de-seguridad`: política de seguridad de la información
 
+## SEO y vistas previas al compartir
+
+- **Metadatos por página:** cada página tiene título, descripción, canonical, hreflang (es-PE / en / x-default), Open Graph y Twitter/X. Se generan con `src/lib/seo.ts` y los textos están en `meta` dentro de los diccionarios.
+- **Imágenes de vista previa:** `public/og/{idioma}-{página}.jpg`, de 1200×630 y menos de 160 KB. Son las que muestran WhatsApp, Facebook, LinkedIn y X. Se regeneran con `npm run assets` (función `build_og_images`).
+- **Datos estructurados para Google:** negocio local (Organization y HomeAndConstructionBusiness), WebSite, migas de pan (BreadcrumbList) y preguntas frecuentes (FAQPage).
+- **Sitemap y robots:** `sitemap.xml` incluye hreflang e imágenes; `robots.txt` apunta al sitemap.
+- **URLs `*.vercel.app`:** se marcan con `noindex` para que Google solo indexe el dominio oficial.
+- **Google Search Console:** agrega la propiedad `https://www.dcorahogarperu.com`, elige el método "Etiqueta HTML" y pega el valor del código en `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` en Vercel. Después envía `sitemap.xml`.
+
 ## Contenido editable
 
 | Qué | Dónde |

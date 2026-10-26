@@ -6,6 +6,7 @@ import { ArrowRight, Building2, Hammer, Palette, Rocket, Store } from "lucide-re
 import { whatsappLink } from "@/data/site";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal, ShadeReveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -20,14 +21,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/quiero-ser
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
-  return {
-    title: d.meta.distributors.title,
-    description: d.meta.distributors.description,
-    alternates: {
-      canonical: href(lang, "distributors"),
-      languages: { es: href("es", "distributors"), en: href("en", "distributors") },
-    },
-  };
+  return pageMetadata({ lang, key: "distributors", title: d.meta.distributors.title, description: d.meta.distributors.description });
 }
 
 const challengeImages = ["/images/medidas.webp", "/images/muestrario.webp", "/images/cotizacion.webp", "/images/reales/taller-mesa.webp"];

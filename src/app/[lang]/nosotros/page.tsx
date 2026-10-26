@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Compass, Handshake, Heart, Quote, ShieldCheck, Sparkles, Target, Timer, TrendingUp } from "lucide-react";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal, ShadeReveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -15,11 +16,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/nosotros">
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const d = await getDictionary(lang);
-  return {
-    title: d.meta.about.title,
-    description: d.meta.about.description,
-    alternates: { canonical: href(lang, "about"), languages: { es: href("es", "about"), en: href("en", "about") } },
-  };
+  return pageMetadata({ lang, key: "about", title: d.meta.about.title, description: d.meta.about.description });
 }
 
 const valueIcons = [Handshake, ShieldCheck, Heart, Timer, TrendingUp];

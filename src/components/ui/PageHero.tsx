@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import { useRef, type ReactNode } from "react";
+import { site } from "@/data/site";
 import { useSiteReady } from "@/lib/ready";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -29,9 +30,20 @@ export function PageHero({
   const ready = useSiteReady();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.label,
+      ...(c.href ? { item: `${site.url}${c.href}` } : {}),
+    })),
+  };
 
   return (
     <section ref={ref} className="relative isolate overflow-hidden bg-navy pt-[calc(var(--header-h)+5rem)] pb-20 text-cream sm:pb-28 lg:pt-[calc(var(--header-h)+8rem)]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <motion.div style={{ y }} className="absolute inset-0 -z-10">
         <Image src={image} alt="" fill priority sizes="100vw" className="object-cover opacity-35" />
       </motion.div>

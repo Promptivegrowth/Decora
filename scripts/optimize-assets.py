@@ -17,7 +17,7 @@ from pathlib import Path
 import fitz  # PyMuPDF
 import imageio_ffmpeg
 import numpy as np
-from PIL import Image, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 LOGOS = ROOT / "logos"
@@ -361,6 +361,113 @@ def build_catalog_renders():
         save_webp(im, PROD_OUT / f"{name}.webp", quality=80)
 
 
+OG_OUT = PUBLIC / "og"
+FONT = ROOT / "scripts" / "fonts" / "Montserrat.ttf"  # Montserrat (OFL), tipografía de la marca
+
+# Imagen de vista previa (WhatsApp, Facebook, LinkedIn, Google) por página e idioma.
+# (clave de ruta, foto de fondo, foco vertical 0-1, {es: (antetítulo, título)}, {en: ...})
+OG_PAGES = [
+    ("home", "images/reales/stock-telas.webp", 0.45,
+     ("CORTINAS ROLLER · LIMA, PERÚ", "Cortinas roller a medida para distribuidores"),
+     ("ROLLER BLINDS · LIMA, PERU", "Made-to-measure roller blinds for distributors")),
+    ("about", "images/reales/fundadores.webp", 0.55,
+     ("NOSOTROS", "Una empresa familiar que respalda cada roller"),
+     ("ABOUT US", "A family business behind every roller")),
+    ("products", "images/productos/tela-screen-rollos.webp", 0.5,
+     ("CATÁLOGO", "Telas, mecanismos, perfilería y accesorios"),
+     ("CATALOG", "Fabrics, mechanisms, profiles and accessories")),
+    ("distributors", "images/reales/equipo-comercial.webp", 0.5,
+     ("PROGRAMA DE DISTRIBUIDORES", "Vende cortinas roller sin taller ni maquinaria"),
+     ("DISTRIBUTOR PROGRAM", "Sell roller blinds with no workshop or machinery")),
+    ("contact", "images/fachada.webp", 0.5,
+     ("CONTACTO", "Cotiza tus cortinas roller con nosotros"),
+     ("CONTACT", "Get a quote for your roller blinds")),
+    ("complaints", "images/mostrador.webp", 0.5,
+     ("ATENCIÓN AL CONSUMIDOR", "Libro de Reclamaciones virtual"),
+     ("CONSUMER SERVICE", "Virtual Complaints Book")),
+    ("privacy", "images/oficina.webp", 0.5,
+     ("LEGAL", "Política de privacidad"),
+     ("LEGAL", "Privacy policy")),
+    ("security", "images/oficina.webp", 0.5,
+     ("LEGAL", "Política de seguridad"),
+     ("LEGAL", "Security policy")),
+]
+
+
+def _font(size, weight):
+    f = ImageFont.truetype(str(FONT), size)
+    f.set_variation_by_axes([weight])
+    return f
+
+
+def _wrap(draw, text, font, width):
+    lines, line = [], ""
+    for word in text.split():
+        test = f"{line} {word}".strip()
+        if draw.textlength(test, font=font) <= width:
+            line = test
+        else:
+            lines.append(line)
+            line = word
+    lines.append(line)
+    return lines
+
+
+def build_og_images():
+    print("Imágenes Open Graph")
+    OG_OUT.mkdir(parents=True, exist_ok=True)
+    W, H = 1200, 630
+    NAVY = (18, 29, 44)
+    TEAL_C = (20, 76, 66)
+    GOLD = (218, 179, 111)
+    CREAM = (251, 246, 230)
+    logo = Image.open(BRAND / "logo-h-crema.webp").convert("RGBA")
+    logo.thumbnail((300, 80), Image.LANCZOS)
+    PANEL = int(W * 0.56)  # ancho del panel de texto
+    PH_W = W - PANEL + 120  # la foto entra un poco bajo el panel para el fundido
+    for key, photo, focus, es, en in OG_PAGES:
+        bg = Image.open(PUBLIC / photo).convert("RGB")
+        scale = max(PH_W / bg.width, H / bg.height)
+        bg = bg.resize((int(bg.width * scale) + 1, int(bg.height * scale) + 1), Image.LANCZOS)
+        top = int((bg.height - H) * focus)
+        left = (bg.width - PH_W) // 2
+        bg = bg.crop((left, top, left + PH_W, top + H))
+        base = Image.new("RGB", (W, H), NAVY)
+        base.paste(bg, (W - PH_W, 0))
+        # Fundido del panel navy hacia la foto
+        mask = Image.new("L", (W, 1))
+        for x in range(W):
+            t = (x - (PANEL - 120)) / 240
+            mask.putpixel((x, 0), int(255 * (1 - max(0.0, min(1.0, t)))))
+        mask = mask.resize((W, H))
+        base = Image.composite(Image.new("RGB", (W, H), NAVY), base, mask)
+        for lang, (eyebrow, title) in (("es", es), ("en", en)):
+            im = base.copy().convert("RGBA")
+            d = ImageDraw.Draw(im)
+            im.alpha_composite(logo, (72, 64))
+            f_eye = _font(22, 700)
+            d.line([(72, 236), (112, 236)], fill=GOLD, width=3)
+            d.text((128, 223), eyebrow, font=f_eye, fill=GOLD)
+            size = 56
+            while True:  # el título debe caber en 3 líneas como máximo
+                f_title = _font(size, 800)
+                lines = _wrap(d, title, f_title, PANEL - 110)
+                if len(lines) <= 3 or size <= 40:
+                    break
+                size -= 2
+            y = 270
+            for line in lines:
+                d.text((72, y), line, font=f_title, fill=CREAM)
+                y += int(size * 1.2)
+            d.text((72, H - 104), "www.dcorahogarperu.com", font=_font(24, 600), fill=CREAM)
+            d.text((72, H - 70), "WhatsApp +51 981 082 480", font=_font(20, 500), fill=GOLD)
+            d.rectangle([(0, H - 12), (W, H)], fill=GOLD)
+            d.rectangle([(0, 0), (8, H - 12)], fill=TEAL_C)
+            out = OG_OUT / f"{lang}-{key}.jpg"
+            im.convert("RGB").save(out, "JPEG", quality=84, optimize=True, progressive=True)
+            print(f"  {out.relative_to(ROOT)}  {out.stat().st_size // 1024} KB")
+
+
 def build_pdf_logo():
     """Logo horizontal en PNG embebido como base64 para el PDF del Libro de Reclamaciones."""
     import base64, io
@@ -389,6 +496,7 @@ if __name__ == "__main__":
     build_catalog_renders()
     build_testimonials()
     build_icons()
+    build_og_images()
     build_brandboard_photos()
     build_video_photos()
     build_videos()
