@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { categories, products, type CategoryId } from "@/data/products";
@@ -46,8 +47,18 @@ export function Solutions({ lang, t }: { lang: Locale; t: Dictionary["home"]["so
                   className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] bg-cream ring-1 ring-navy/10 transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgb(18_29_44/0.45)]"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    <div className="h-full w-full transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]">
-                      <ProductVisual product={product} color={f.color} />
+                    <div className="relative h-full w-full transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]">
+                      {"cover" in c && c.cover ? (
+                        <Image
+                          src={c.cover}
+                          alt={c.name[lang]}
+                          fill
+                          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <ProductVisual product={product} color={f.color} />
+                      )}
                     </div>
                     {/* Cortina con la descripción */}
                     <div className="absolute inset-0 flex -translate-y-full flex-col justify-end bg-navy/92 p-6 text-cream transition-transform duration-700 ease-[cubic-bezier(.76,0,.24,1)] group-hover:translate-y-0">

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Check, ClipboardList, Plus, Search, X } from "lucide-react";
-import { useDeferredValue, useMemo, useState } from "react";
+import { ArrowRight, Check, ClipboardList, Images, Plus, Search, X } from "lucide-react";
+import { useCallback, useDeferredValue, useMemo, useState } from "react";
 import { categories, productColors, products, type CategoryId, type Product } from "@/data/products";
 import { href, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/es";
 import { categoryIcons } from "@/components/ui/icons";
+import { ProductDetail } from "./ProductDetail";
 import { ProductVisual } from "./ProductVisual";
 import { useQuote } from "./QuoteProvider";
 
@@ -33,6 +34,8 @@ export function Catalog({ lang, t }: { lang: Locale; t: Dictionary["products"] }
     setCat(categories.some((c) => c.id === initial) ? (initial as CategoryId) : "all");
   }
   const [query, setQuery] = useState("");
+  const [detail, setDetail] = useState<{ id: string; color?: string } | null>(null);
+  const closeDetail = useCallback(() => setDetail(null), []);
   const q = useDeferredValue(query);
   const quote = useQuote();
 
@@ -147,13 +150,31 @@ export function Catalog({ lang, t }: { lang: Locale; t: Dictionary["products"] }
             <motion.ul layout className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               <AnimatePresence mode="popLayout">
                 {list.map((p) => (
-                  <ProductCard key={p.id} p={p} lang={lang} t={t} inQuote={quote.has(p.id)} onAdd={quote.add} />
+                  <ProductCard
+                    key={p.id}
+                    p={p}
+                    lang={lang}
+                    t={t}
+                    inQuote={quote.has(p.id)}
+                    onAdd={quote.add}
+                    onOpen={(color) => setDetail({ id: p.id, color })}
+                  />
                 ))}
               </AnimatePresence>
             </motion.ul>
           )}
         </div>
       </div>
+
+      <ProductDetail
+        product={detail ? (products.find((x) => x.id === detail.id) ?? null) : null}
+        initialColor={detail?.color}
+        lang={lang}
+        t={t}
+        inQuote={detail ? quote.has(detail.id) : false}
+        onAdd={quote.add}
+        onClose={closeDetail}
+      />
 
       {/* Barra de cotización flotante */}
       <AnimatePresence>
@@ -186,12 +207,14 @@ function ProductCard({
   t,
   inQuote,
   onAdd,
+  onOpen,
 }: {
   p: Product;
   lang: Locale;
   t: Dictionary["products"];
   inQuote: boolean;
   onAdd: (id: string, color?: string) => void;
+  onOpen: (color?: string) => void;
 }) {
   const [color, setColor] = useState<string | undefined>(p.colors[0]);
   const [flash, setFlash] = useState(false);
@@ -205,9 +228,20 @@ function ProductCard({
       className="group flex flex-col overflow-hidden rounded-[1.5rem] bg-cream ring-1 ring-navy/10 transition-shadow duration-500 hover:shadow-[0_30px_50px_-30px_rgb(18_29_44/0.5)]"
     >
       <div className="relative aspect-[5/4] overflow-hidden">
-        <div className="h-full w-full transition-transform duration-[1.1s] ease-out group-hover:scale-[1.04]">
+        <button
+          type="button"
+          onClick={() => onOpen(color)}
+          aria-label={`${t.card.details}: ${p.name[lang]}`}
+          className="block h-full w-full cursor-zoom-in transition-transform duration-[1.1s] ease-out group-hover:scale-[1.04]"
+        >
           <ProductVisual product={p} color={color} />
-        </div>
+        </button>
+        {(p.photos?.length ?? 0) > 1 && (
+          <span className="pointer-events-none absolute top-3 right-3 flex items-center gap-1 rounded-full bg-navy/80 px-2.5 py-1 text-[0.68rem] font-semibold text-cream backdrop-blur">
+            <Images className="h-3 w-3 text-gold" />
+            {p.photos!.length} {t.card.photos}
+          </span>
+        )}
         <span className="absolute top-3 left-3 rounded-full bg-cream/90 px-2.5 py-1 text-[0.68rem] font-bold tracking-wide text-teal uppercase backdrop-blur">
           {p.group[lang]}
         </span>
@@ -218,7 +252,11 @@ function ProductCard({
         )}
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[1.05rem] leading-snug">{p.name[lang]}</h3>
+        <h3 className="text-[1.05rem] leading-snug">
+          <button type="button" onClick={() => onOpen(color)} className="text-left transition-colors hover:text-teal">
+            {p.name[lang]}
+          </button>
+        </h3>
         <p className="mt-2 text-sm leading-relaxed text-navy/65">{p.description[lang]}</p>
 
         <div className="mt-4">

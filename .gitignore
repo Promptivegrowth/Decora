@@ -55,3 +55,4 @@ __pycache__/
 
 # fotos originales (las optimizadas están en public/images/reales)
 /fotos reales/
+/nuevas imagenes y videos/

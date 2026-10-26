@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 const images = [
   "/images/reales/stock-telas.webp",
-  "/images/almacen.webp",
+  "/images/productos/importacion-camion.webp",
   "/images/reales/camiseta-rack.webp",
   "/images/reales/taller-mesa.webp",
   "/images/mostrador.webp",

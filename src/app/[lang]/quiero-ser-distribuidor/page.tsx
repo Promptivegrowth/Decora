@@ -14,6 +14,7 @@ import { Faq } from "@/components/ui/Faq";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 import { DistributorForm } from "@/components/forms/DistributorForm";
 import { Pitch } from "@/components/home/Pitch";
+import { Testimonials } from "@/components/home/Testimonials";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/quiero-ser-distribuidor">): Promise<Metadata> {
   const { lang } = await params;
@@ -92,6 +93,7 @@ export default async function DistributorsPage({ params }: PageProps<"/[lang]/qu
       </section>
 
       <Pitch lang={lang} t={d.home.pitch} />
+      <Testimonials t={d.home.testimonials} common={d.common} id="testimonios" />
 
       {/* Perfiles */}
       <section className="py-24 sm:py-32">

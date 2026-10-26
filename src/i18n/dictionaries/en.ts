@@ -161,6 +161,8 @@ const en: Dictionary = {
       duoClosed: "Bands closed",
       cta: "See all fabrics",
       levels: ["Very low", "Low", "Medium", "High", "Very high"],
+      collageTitle: "Our fabrics, in real photos",
+      collage: ["Screen fabrics", "Duo fabrics", "Imported stock", "Fabrics in the workshop", "Cut to measure", "Direct import"],
     },
     pitch: {
       eyebrow: "Distributor program",
@@ -177,6 +179,38 @@ const en: Dictionary = {
       cta: "Explore the program",
       quote: "You focus on winning customers, building your brand and growing your business. We help you deliver behind every order.",
       quoteBy: "Administration Management, D'Cora Hogar",
+    },
+    testimonials: {
+      eyebrow: "Testimonials",
+      title: "What our decorators and distributors say",
+      text: "Professionals who rely on D'Cora Hogar to deliver for their customers, order after order.",
+      years: "years with D'Cora Hogar",
+      items: [
+        {
+          id: "jose",
+          name: "José",
+          role: "Decorator",
+          years: "7",
+          quote:
+            "Their products are top quality, their delivery times are precise and they understand when we need urgent orders. For me, D'Cora Hogar means excellence.",
+        },
+        {
+          id: "henry",
+          name: "Henry",
+          role: "Interior designer and decorator",
+          years: "3–4",
+          quote:
+            "I place the order and I have it the next day. That speed lets me coordinate jobs with my customers, and the products are very good quality, very durable.",
+        },
+        {
+          id: "yerson",
+          name: "Yerson",
+          role: "Decorator",
+          years: "3",
+          quote:
+            "What I love about D'Cora Hogar is the price, the quality and the way they treat you. I've never had a problem, and when I did, they solved it.",
+        },
+      ],
     },
     process: {
       eyebrow: "Our process",
@@ -323,6 +357,16 @@ const en: Dictionary = {
       photoSoon: "Product photo coming soon",
       variants: "Options",
       noColors: "Standard finish",
+      photos: "photos",
+    },
+    detail: {
+      close: "Close",
+      prev: "Previous photo",
+      next: "Next photo",
+      photo: "Photo",
+      spec: "Specification",
+      colorsAvailable: "Available colours",
+      note: "Distributor pricing on request. We send the quote by email or WhatsApp.",
     },
     quote: {
       title: "Your quote",

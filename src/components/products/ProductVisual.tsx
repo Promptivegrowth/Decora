@@ -1,26 +1,34 @@
 import Image from "next/image";
 import { productColors, type Product, type ProductColor } from "@/data/products";
 
+/** Foto real del producto para el color elegido (o la principal). */
+export function photoFor(product: Product, color?: string) {
+  return (color && product.colorPhotos?.[color as ProductColor]) || product.photos?.[0];
+}
+
 /**
- * Representación visual de cada producto. Si el producto tiene foto (product.image)
- * se usa la foto; si no, una ilustración técnica en colores de marca.
- * Las telas se dibujan como un roller con el color y la textura real de la tela.
+ * Representación visual de cada producto. Si el producto tiene fotos reales se usa
+ * la foto (la del color elegido cuando existe); si no, una ilustración técnica en
+ * colores de marca. Las telas sin foto se dibujan como un roller con su color y textura.
  */
 export function ProductVisual({
   product,
   color,
   small = false,
   className = "",
+  sizes = "(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw",
 }: {
   product: Product;
   color?: string;
   small?: boolean;
   className?: string;
+  sizes?: string;
 }) {
-  if (product.image) {
+  const photo = photoFor(product, color);
+  if (photo) {
     return (
-      <div className={`relative h-full w-full bg-cream ${className}`}>
-        <Image src={product.image} alt={product.name.es} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
+      <div className={`relative h-full w-full bg-navy ${className}`}>
+        <Image src={photo} alt={product.name.es} fill sizes={small ? "64px" : sizes} className="object-cover" />
       </div>
     );
   }

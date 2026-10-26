@@ -27,6 +27,7 @@ export type ProductColor = keyof typeof productColors;
 export const categories = [
   {
     id: "telas",
+    cover: "/images/productos/tela-screen-rollos.webp",
     name: { es: "Telas", en: "Fabrics" },
     short: { es: "Screen, blackout, dúo y linen", en: "Screen, blackout, duo and linen" },
     description: {
@@ -36,6 +37,7 @@ export const categories = [
   },
   {
     id: "sistemas",
+    cover: "/images/productos/rolleasse-3-piezas.webp",
     name: { es: "Mecanismos y kits", en: "Mechanisms & kits" },
     short: { es: "VTX, Rolleasse y soportes", en: "VTX, Rolleasse and brackets" },
     description: {
@@ -45,6 +47,7 @@ export const categories = [
   },
   {
     id: "perfileria",
+    cover: "/images/productos/sistema-duo.webp",
     name: { es: "Tubos y perfilería", en: "Tubes & profiles" },
     short: { es: "Tubos, cabezales, barras y tapas", en: "Tubes, headrails, bottom bars, caps" },
     description: {
@@ -54,6 +57,7 @@ export const categories = [
   },
   {
     id: "motorizacion",
+    cover: "/images/productos/motor-bateria.webp",
     name: { es: "Motorización", en: "Motorization" },
     short: { es: "Motores eléctricos y a batería", en: "Electric and battery motors" },
     description: {
@@ -72,6 +76,7 @@ export const categories = [
   },
   {
     id: "accesorios",
+    cover: "/images/productos/cadena-plastica.webp",
     name: { es: "Accesorios e instalación", en: "Accessories & installation" },
     short: { es: "Cadenas, topes, cintas y más", en: "Chains, stops, tapes and more" },
     description: {
@@ -79,7 +84,7 @@ export const categories = [
       en: "Everything needed to finish and install each roller to a professional standard.",
     },
   },
-] as const satisfies readonly { id: string; name: T; short: T; description: T }[];
+] as const satisfies readonly { id: string; cover?: string; name: T; short: T; description: T }[];
 
 export type CategoryId = (typeof categories)[number]["id"];
 
@@ -122,8 +127,10 @@ export type Product = {
   openness?: number;
   /** Número de imagen de referencia indicado en el documento (fotos pendientes) */
   ref?: number;
-  /** Ruta de la foto del producto cuando esté disponible (public/images/productos) */
-  image?: string;
+  /** Fotos reales del producto (public/images/productos). La primera es la principal. */
+  photos?: string[];
+  /** Foto específica por color, cuando existe */
+  colorPhotos?: Partial<Record<ProductColor, string>>;
 };
 
 const G = {
@@ -224,6 +231,7 @@ export const products: Product[] = [
     spec: { es: "Día / noche", en: "Day / night" },
     colors: ["blanco", "crema", "gris"],
     visual: "duo",
+    photos: ["/images/productos/tela-duo.webp"],
   },
   {
     id: "tela-linen-5",
@@ -265,6 +273,7 @@ export const products: Product[] = [
     colors: [],
     visual: "kit",
     ref: 7,
+    photos: ["/images/productos/kit-vtx20.webp"],
   },
   {
     id: "kit-vtx30",
@@ -278,6 +287,7 @@ export const products: Product[] = [
     colors: [],
     visual: "kit",
     ref: 8,
+    photos: ["/images/productos/kit-vtx30.webp"],
   },
   {
     id: "mecanismo-rolleasse-kit",
@@ -291,6 +301,8 @@ export const products: Product[] = [
     colors: ["blanco", "crema", "gris", "negro"],
     visual: "kit",
     ref: 9,
+    photos: ["/images/productos/rolleasse-kit-blanco.webp", "/images/productos/rolleasse-kit-gris.webp", "/images/productos/rolleasse-kit-3.webp"],
+    colorPhotos: { blanco: "/images/productos/rolleasse-kit-blanco.webp", gris: "/images/productos/rolleasse-kit-gris.webp" },
   },
   {
     id: "mecanismo-generico-kit",
@@ -317,6 +329,7 @@ export const products: Product[] = [
     colors: ["blanco"],
     visual: "kit",
     ref: 11,
+    photos: ["/images/productos/rolleasse-3-piezas.webp"],
   },
   {
     id: "soporte-central-duo",
@@ -396,6 +409,7 @@ export const products: Product[] = [
     spec: { es: "5.80 ML", en: "5.80 m" },
     colors: ["blanco"],
     visual: "headrail",
+    photos: ["/images/productos/cabezal-duo.webp", "/images/productos/sistema-duo.webp", "/images/productos/cabezal-duo-almacen.webp"],
   },
   {
     id: "cabezal-duo-120",
@@ -409,6 +423,7 @@ export const products: Product[] = [
     spec: { es: "5.80 ML", en: "5.80 m" },
     colors: ["blanco"],
     visual: "headrail",
+    photos: ["/images/productos/cabezal-duo.webp", "/images/productos/sistema-duo.webp", "/images/productos/cabezal-duo-almacen.webp"],
   },
   {
     id: "barra-baja-tradicional",
@@ -453,6 +468,7 @@ export const products: Product[] = [
     description: { es: "Tapas laterales para cabezal Dúo 100.", en: "Side caps for the Duo 100 headrail." },
     colors: ["blanco"],
     visual: "cap",
+    photos: ["/images/productos/tapas-cabezal-100.webp", "/images/productos/sistema-duo.webp"],
   },
   {
     id: "tapas-cabezal-120",
@@ -462,6 +478,7 @@ export const products: Product[] = [
     description: { es: "Tapas laterales para cabezal Dúo 120.", en: "Side caps for the Duo 120 headrail." },
     colors: ["blanco"],
     visual: "cap",
+    photos: ["/images/productos/tapas-cabezal-120.webp", "/images/productos/sistema-duo.webp"],
   },
   {
     id: "tapa-barra-baja-duo",
@@ -492,6 +509,7 @@ export const products: Product[] = [
     },
     colors: ["blanco"],
     visual: "valance",
+    photos: ["/images/productos/cenefa-pvc.webp"],
   },
   {
     id: "perfil-lateral",
@@ -513,6 +531,7 @@ export const products: Product[] = [
     description: { es: "Perfil ranurado para sistemas dúo.", en: "Slotted profile for duo systems." },
     colors: ["blanco", "crema"],
     visual: "profile",
+    photos: ["/images/productos/ranura-duo.webp", "/images/productos/sistema-duo.webp"],
   },
 
   // ------------------------------------------------------------- MOTORIZACIÓN
@@ -528,6 +547,7 @@ export const products: Product[] = [
     colors: [],
     visual: "motor",
     ref: 5,
+    photos: ["/images/productos/motor-electrico.webp"],
   },
   {
     id: "motor-bateria-inalambrico",
@@ -542,6 +562,7 @@ export const products: Product[] = [
     variants: ["N1", "N3", "N6"],
     colors: [],
     visual: "battery",
+    photos: ["/images/productos/motor-bateria.webp"],
   },
   {
     id: "corona-raex-63",
@@ -605,6 +626,7 @@ export const products: Product[] = [
     colors: ["transparente"],
     visual: "stopper",
     ref: 1,
+    photos: ["/images/productos/stoppers-transparentes.webp", "/images/productos/stoppers-transparentes-2.webp"],
   },
   {
     id: "conectores",
@@ -615,6 +637,8 @@ export const products: Product[] = [
     colors: ["blanco", "crema"],
     visual: "connector",
     ref: 2,
+    photos: ["/images/productos/conectores-blanco.webp", "/images/productos/conectores-crema.webp"],
+    colorPhotos: { blanco: "/images/productos/conectores-blanco.webp", crema: "/images/productos/conectores-crema.webp" },
   },
   {
     id: "cadena-plastica",
@@ -628,6 +652,7 @@ export const products: Product[] = [
     colors: ["blanco", "crema", "gris", "negro", "marron"],
     visual: "chain",
     ref: 3,
+    photos: ["/images/productos/cadena-plastica.webp", "/images/productos/cadena-plastica-2.webp"],
   },
   {
     id: "topes",
@@ -638,6 +663,7 @@ export const products: Product[] = [
     colors: ["blanco", "crema"],
     visual: "stopper",
     ref: 4,
+    photos: ["/images/productos/topes.webp"],
   },
   {
     id: "cinta-doble-contacto",
@@ -651,6 +677,7 @@ export const products: Product[] = [
     colors: ["rojo"],
     visual: "tape",
     ref: 12,
+    photos: ["/images/productos/cinta-doble-contacto.webp"],
   },
   {
     id: "cinta-fleje-8mm",
@@ -661,6 +688,7 @@ export const products: Product[] = [
     colors: ["gris"],
     visual: "tape",
     ref: 13,
+    photos: ["/images/productos/cinta-fleje.webp"],
   },
   {
     id: "angulo-instalacion",
@@ -673,6 +701,7 @@ export const products: Product[] = [
     },
     colors: [],
     visual: "angle",
+    photos: ["/images/productos/angulo-instalacion.webp"],
   },
 ];
 

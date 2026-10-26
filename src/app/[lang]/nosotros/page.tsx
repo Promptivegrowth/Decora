@@ -144,7 +144,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
           <div className="lg:col-span-7">
             <SectionHeading eyebrow={a.import.eyebrow} title={a.import.title} text={a.import.text} />
             <div className="mt-10 grid grid-cols-3 gap-3">
-              {["/images/reales/stock-telas.webp", "/images/almacen.webp", "/images/reales/taller-mesa.webp"].map((src, i) => (
+              {["/images/reales/stock-telas.webp", "/images/productos/importacion-descarga.webp", "/images/reales/taller-mesa.webp"].map((src, i) => (
                 <ShadeReveal key={src} delay={i * 0.1} className="aspect-[3/4] rounded-2xl" shade={i === 1 ? "bg-navy" : "bg-teal"}>
                   <Image src={src} alt="" fill sizes="(max-width:1024px) 33vw, 20vw" className="object-cover" />
                 </ShadeReveal>

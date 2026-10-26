@@ -11,6 +11,7 @@ import { Process } from "@/components/home/Process";
 import { VideoStory } from "@/components/home/VideoStory";
 import { Gallery } from "@/components/home/Gallery";
 import { Team } from "@/components/home/Team";
+import { Testimonials } from "@/components/home/Testimonials";
 import { FinalCta } from "@/components/home/FinalCta";
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
@@ -32,6 +33,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <Solutions lang={lang} t={h.solutions} />
       <LightLab lang={lang} t={h.lab} />
       <Pitch lang={lang} t={h.pitch} />
+      <Testimonials t={h.testimonials} common={dict.common} />
       <Process t={h.process} />
       <Team lang={lang} t={h.team} />
       <VideoStory t={h.videos} common={dict.common} />

@@ -103,14 +103,16 @@ Las fotos profesionales originales se guardan en la carpeta `fotos reales/`, que
 | `equipo-comercial`, `equipo-taller` | Equipos en Inicio y Nosotros, contacto y distribuidores |
 | `stock-telas`, `camiseta-rack`, `taller-mesa`, `corte-telas`, `corte-perfiles` | Proceso, galería, catálogo y megamenú |
 
-### Fotos de productos
+### Fotos de productos y testimonios
 
-Cada producto tiene una ilustración generada en los colores de marca. Las telas se muestran como un roller con su textura y color reales. Cuando lleguen las fotos:
+Las fotos y los videos originales se guardan en la carpeta `nuevas imagenes y videos/`, que no se sube al repositorio. `npm run assets` los recorta y optimiza:
 
-1. Guárdalas en `public/images/productos/` (WebP o JPG, unos 1200 px).
-2. Agrega `image: "/images/productos/archivo.webp"` al producto en `src/data/products.ts`.
-
-El campo `ref` de cada producto guarda el número de imagen que indica el documento de la empresa, para facilitar esa correspondencia.
+- **Fotos de productos:** van a `public/images/productos/`.
+  - Cada producto lista sus fotos en `photos` (la primera es la principal) dentro de `src/data/products.ts`.
+  - Si un producto tiene una foto por color, se indica en `colorPhotos`, y al elegir ese color la foto cambia en el catálogo y en la vista detallada.
+  - Los productos sin foto muestran una ilustración en los colores de la marca.
+- **Portadas de categoría:** cada categoría de `categories` tiene un campo `cover`.
+- **Testimonios en video:** van a `public/videos/testimonios/` (José, Henry y Yerson). Sus textos están en `home.testimonials`, dentro de los diccionarios.
 
 ### Video del hero
 

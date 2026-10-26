@@ -163,6 +163,8 @@ const es = {
       duoClosed: "Franjas cerradas",
       cta: "Ver todas las telas",
       levels: ["Muy baja", "Baja", "Media", "Alta", "Muy alta"],
+      collageTitle: "Nuestras telas, en fotos reales",
+      collage: ["Telas screen", "Telas dúo", "Stock importado", "Telas en taller", "Corte a medida", "Importación directa"],
     },
     pitch: {
       eyebrow: "Programa de distribuidores",
@@ -179,6 +181,38 @@ const es = {
       cta: "Conocer el programa",
       quote: "Tú enfócate en conseguir clientes, construir tu marca y hacer crecer tu negocio. Nosotros te ayudamos a responder detrás de cada pedido.",
       quoteBy: "Gerencia Administrativa, D'Cora Hogar",
+    },
+    testimonials: {
+      eyebrow: "Testimonios",
+      title: "Lo que dicen nuestros decoradores y distribuidores",
+      text: "Profesionales que confían en D'Cora Hogar para cumplir con sus clientes, pedido tras pedido.",
+      years: "años con D'Cora Hogar",
+      items: [
+        {
+          id: "jose",
+          name: "José",
+          role: "Decorador",
+          years: "7",
+          quote:
+            "Sus productos son de primera calidad, sus tiempos de entrega son precisos y entienden cuando requerimos pedidos urgentes. Para mí, D'Cora Hogar es sinónimo de excelencia.",
+        },
+        {
+          id: "henry",
+          name: "Henry",
+          role: "Diseñador y decorador de interiores",
+          years: "3–4",
+          quote:
+            "Hago el pedido y para el día siguiente ya lo tengo. Esa agilidad me permite coordinar los trabajos con mis clientes, y los productos son de muy buena calidad, muy resistentes.",
+        },
+        {
+          id: "yerson",
+          name: "Yerson",
+          role: "Decorador",
+          years: "3",
+          quote:
+            "Lo que me encanta de D'Cora Hogar es su precio, la calidad y la forma de atención. Nunca he tenido un problema y, si lo he tenido, me lo han resuelto.",
+        },
+      ],
     },
     process: {
       eyebrow: "Nuestro proceso",
@@ -325,6 +359,16 @@ const es = {
       photoSoon: "Foto referencial próximamente",
       variants: "Presentaciones",
       noColors: "Acabado estándar",
+      photos: "fotos",
+    },
+    detail: {
+      close: "Cerrar",
+      prev: "Foto anterior",
+      next: "Foto siguiente",
+      photo: "Foto",
+      spec: "Especificación",
+      colorsAvailable: "Colores disponibles",
+      note: "Precios de distribuidor a solicitud. Te enviamos la cotización por correo o WhatsApp.",
     },
     quote: {
       title: "Tu cotización",

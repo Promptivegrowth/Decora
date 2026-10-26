@@ -306,3 +306,40 @@ test.describe("Libro de Reclamaciones y políticas", () => {
     await expect(page).toHaveURL(/\/en\/complaints-book$/);
   });
 });
+
+test.describe("Fotos reales, testimonios y vista detallada", () => {
+  test("testimonios en inicio y en distribuidores", async ({ page }) => {
+    for (const path of ["/es", "/es/quiero-ser-distribuidor"]) {
+      await page.goto(path);
+      await ready(page);
+      const section = page.locator("section", { hasText: "Lo que dicen nuestros decoradores" });
+      await expect(section.locator("video")).toHaveCount(3);
+      for (const name of ["José", "Henry", "Yerson"]) await expect(section.getByText(name, { exact: true }).first()).toBeAttached();
+    }
+  });
+
+  test("portadas reales de categorías y collage de telas", async ({ page }) => {
+    await page.goto("/es");
+    await ready(page);
+    await expect(page.locator('img[alt="Telas"]').first()).toBeAttached();
+    await expect(page.locator("#laboratorio img")).toHaveCount(6);
+    const res = await page.request.get("/images/productos/tela-screen-rollos.webp");
+    expect(res.ok()).toBeTruthy();
+  });
+
+  test("vista detallada con galería y foto por color", async ({ page }) => {
+    await page.goto("/es/productos?c=sistemas");
+    await ready(page);
+    await page.getByRole("button", { name: /Ver detalle: Mecanismo Rolleasse kit completo/ }).click();
+    const dialog = page.getByRole("dialog", { name: "Mecanismo Rolleasse kit completo" });
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole("radio", { name: "Gris" }).click();
+    await expect(dialog.getByRole("button", { name: "Foto 2" })).toHaveAttribute("aria-current", "true");
+    await dialog.getByRole("button", { name: "Foto siguiente" }).click();
+    await expect(dialog.getByRole("button", { name: "Foto 3" })).toHaveAttribute("aria-current", "true");
+    await dialog.getByRole("button", { name: /Agregar a cotización/ }).click();
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(page.getByRole("button", { name: /Cotización \(1\)/ })).toBeVisible();
+  });
+});

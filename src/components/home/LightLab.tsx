@@ -8,6 +8,7 @@ import { href, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/es";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { FabricCollage } from "./FabricCollage";
 
 type Metrics = { light: number; view: number; uv: number; privacy: number; cover: number };
 
@@ -280,6 +281,7 @@ export function LightLab({ lang, t }: { lang: Locale; t: Dictionary["home"]["lab
           </div>
         </Reveal>
       </div>
+      <FabricCollage title={t.collageTitle} labels={t.collage} />
     </section>
   );
 }

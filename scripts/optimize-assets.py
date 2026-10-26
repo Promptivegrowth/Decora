@@ -186,7 +186,6 @@ def build_video_photos():
         (M, 11.4, (0, 452, 1080, 1430), "medidas"),
         (M, 12.6, (0, 452, 1080, 1430), "muestrario"),
         (M, 38.6, (0, 452, 1080, 1430), "oficina"),
-        (J, 25.3, (0, 0, 1080, 1130), "almacen"),
         (J, 13.5, (0, 340, 1080, 1150), "mostrador"),
     ]
     for src, t, box, name in shots:
@@ -268,6 +267,73 @@ def build_real_photos():
         save_webp(im, REAL_OUT / f"{name}.webp", quality=80)
 
 
+NUEVAS = ROOT / "nuevas imagenes y videos"
+PROD_OUT = IMAGES / "productos"
+
+
+def build_product_photos():
+    """Fotos reales de productos y operaciones (carpeta 'nuevas imagenes y videos')."""
+    print("Fotos de productos")
+    PROD_OUT.mkdir(parents=True, exist_ok=True)
+    files = sorted(NUEVAS.glob("*.jpeg"))
+    # índice → (recorte en px del original, nombre de salida)
+    crops = {
+        0: ((0, 200, 720, 920), "stoppers-transparentes-2"),
+        1: ((40, 280, 680, 1000), "stoppers-transparentes"),
+        2: ((40, 260, 680, 1040), "conectores-blanco"),
+        3: ((0, 220, 720, 1000), "conectores-crema"),
+        4: ((0, 250, 1280, 720), "cadena-plastica-2"),
+        5: ((0, 200, 1280, 720), "cadena-plastica"),
+        6: ((0, 260, 720, 1040), "topes"),
+        7: ((0, 0, 690, 720), "cinta-fleje"),
+        8: ((0, 340, 720, 1100), "kit-vtx20"),
+        9: ((0, 340, 720, 1100), "kit-vtx30"),
+        10: ((0, 380, 720, 1120), "rolleasse-kit-3"),
+        11: ((0, 260, 720, 1040), "rolleasse-kit-gris"),
+        12: ((0, 320, 720, 1100), "rolleasse-3-piezas"),
+        13: ((0, 300, 720, 1080), "rolleasse-kit-blanco"),
+        14: ((0, 250, 720, 1100), "motor-bateria"),
+        15: ((0, 250, 720, 1100), "motor-electrico"),
+        16: ((0, 230, 720, 1280), "cenefa-pvc"),
+        17: ((0, 300, 720, 1180), "angulo-instalacion"),
+        18: ((0, 200, 720, 1280), "cabezal-duo-almacen"),
+        19: ((150, 60, 1130, 720), "cabezal-duo"),
+        20: ((250, 120, 1000, 720), "tapas-cabezal-100"),
+        21: ((330, 80, 1000, 720), "tapas-cabezal-120"),
+        22: ((0, 0, 720, 1000), "ranura-duo"),
+        23: ((0, 150, 720, 1100), "sistema-duo"),
+        24: ((0, 0, 1280, 720), "tela-duo"),
+        25: ((0, 0, 1280, 720), "tela-screen-rollos"),
+        26: ((0, 0, 720, 1280), "telas-taller"),
+        27: ((0, 0, 720, 1280), "atencion-decoradores"),
+        28: ((0, 0, 720, 1280), "importacion-descarga"),
+        29: ((0, 0, 720, 1280), "importacion-camion"),
+    }
+    for i, (box, name) in crops.items():
+        im = ImageOps.exif_transpose(Image.open(files[i])).convert("RGB").crop(box)
+        im.thumbnail((1200, 1200), Image.LANCZOS)
+        save_webp(im, PROD_OUT / f"{name}.webp", quality=78)
+    # La foto #7 tiene dos productos: la cinta roja va aparte
+    im = ImageOps.exif_transpose(Image.open(files[7])).convert("RGB").crop((690, 20, 1280, 720))
+    save_webp(im, PROD_OUT / "cinta-doble-contacto.webp", quality=78)
+
+
+def build_testimonials():
+    """Videos de testimonios de decoradores-distribuidores (verticales 480x848)."""
+    print("Testimonios")
+    out = VOUT / "testimonios"
+    out.mkdir(parents=True, exist_ok=True)
+    vids = sorted(NUEVAS.glob("*.mp4"))
+    # (nombre, segundo del póster)
+    meta = [("henry", 9.0), ("yerson", 2.5), ("jose", 9.5)]
+    for src, (name, t) in zip(vids, meta):
+        dst = out / f"{name}.mp4"
+        run(["-i", str(src), "-c:v", "libx264", "-profile:v", "high", "-pix_fmt", "yuv420p", "-preset", "slow",
+             "-crf", "26", "-movflags", "+faststart", "-c:a", "aac", "-b:a", "96k", str(dst)])
+        print(f"  {dst.relative_to(ROOT)}  {dst.stat().st_size // 1024} KB")
+        save_webp(frame(src, t), out / f"{name}-poster.webp", quality=76)
+
+
 def build_pdf_logo():
     """Logo horizontal en PNG embebido como base64 para el PDF del Libro de Reclamaciones."""
     import base64, io
@@ -292,6 +358,8 @@ if __name__ == "__main__":
     build_logos()
     build_pdf_logo()
     build_real_photos()
+    build_product_photos()
+    build_testimonials()
     build_icons()
     build_brandboard_photos()
     build_video_photos()
