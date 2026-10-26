@@ -195,7 +195,7 @@ export function Hero({
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
                   <span className="block font-display text-3xl font-bold text-gold sm:text-4xl">
-                    {ready ? <Counter value={s.value} suffix={s.suffix} /> : `0${s.suffix}`}
+                    {ready ? <Counter value={s.value} suffix={s.suffix} delay={1.45 + i * 0.12} /> : `0${s.suffix}`}
                   </span>
                   <span className="mt-1 block text-xs leading-snug text-cream/65 sm:text-sm">{s.label}</span>
                 </dd>
