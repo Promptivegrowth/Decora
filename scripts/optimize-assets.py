@@ -334,6 +334,33 @@ def build_testimonials():
         save_webp(frame(src, t), out / f"{name}-poster.webp", quality=76)
 
 
+def build_catalog_renders():
+    """Fotos de estudio de productos (carpeta 'nuevas imagenes y videos/nuevas imagenes')."""
+    print("Fotos de estudio de productos")
+    src_dir = NUEVAS / "nuevas imagenes"
+    names = {
+        "Corona plástica industrial blanca con tornillo metálico.png": "corona-raex-63",
+        "Kit de persiana enrollable blanco.png": "mecanismo-generico",
+        "Perfil Blanco Minimalista sobre Tela Gris.png": "barra-baja-tradicional",
+        "Perfil industrial de aluminio en perspectiva.png": "perfil-lateral",
+        "Riel de aluminio para persiana zebra.png": "barra-baja-duo",
+        "Riel de cortina blanco con ganchos metálicos.png": "riel-ripple-fold",
+        "Riel hotelero y bastón de fibra de vidrio.png": "riel-hotelero",
+        "Soporte blanco con mecanismo circular.png": "soporte-lateral-duo",
+        "Soporte blanco para persiana DÚO.png": "soporte-central-duo",
+        "Soporte blanco para riel de cortina.png": "soporte-riel-hotelero",
+        "Tapa plástica blanca con clips laterales.png": "tapa-barra-baja",
+        "Tapón blanco para perfil sobre tela gris.png": "tapa-perfil-lateral",
+        "Tubo de aluminio sobre fondo gris.png": "tubo-38",
+        "Tubo de metal sobre tela gris.png": "tubo-50",
+        "Tubo de aluminio sobre tela gris.png": "tubo-63",
+    }
+    for src, name in names.items():
+        im = ImageOps.exif_transpose(Image.open(src_dir / src)).convert("RGB")
+        im.thumbnail((1200, 1200), Image.LANCZOS)
+        save_webp(im, PROD_OUT / f"{name}.webp", quality=80)
+
+
 def build_pdf_logo():
     """Logo horizontal en PNG embebido como base64 para el PDF del Libro de Reclamaciones."""
     import base64, io
@@ -359,6 +386,7 @@ if __name__ == "__main__":
     build_pdf_logo()
     build_real_photos()
     build_product_photos()
+    build_catalog_renders()
     build_testimonials()
     build_icons()
     build_brandboard_photos()

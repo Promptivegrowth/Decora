@@ -67,6 +67,7 @@ export const categories = [
   },
   {
     id: "rieles",
+    cover: "/images/productos/riel-hotelero.webp",
     name: { es: "Rieles", en: "Tracks" },
     short: { es: "Riel hotelero y Ripple Fold", en: "Hotel track and Ripple Fold" },
     description: {
@@ -316,6 +317,7 @@ export const products: Product[] = [
     colors: ["blanco"],
     visual: "kit",
     ref: 10,
+    photos: ["/images/productos/mecanismo-generico.webp"],
   },
   {
     id: "mecanismo-rolleasse-3-piezas",
@@ -342,6 +344,7 @@ export const products: Product[] = [
     },
     colors: ["blanco"],
     visual: "bracket",
+    photos: ["/images/productos/soporte-central-duo.webp"],
   },
   {
     id: "soporte-lateral-duo",
@@ -354,6 +357,7 @@ export const products: Product[] = [
     },
     colors: ["blanco"],
     visual: "bracket",
+    photos: ["/images/productos/soporte-lateral-duo.webp"],
   },
 
   // ------------------------------------------------------------- PERFILERÍA
@@ -370,6 +374,7 @@ export const products: Product[] = [
     variants: ["5.80 ML × 0.90", "5.80 ML × 1.20"],
     colors: [],
     visual: "tube",
+    photos: ["/images/productos/tubo-38.webp"],
   },
   {
     id: "tubo-aluminio-50",
@@ -383,6 +388,7 @@ export const products: Product[] = [
     spec: { es: "5.80 ML × 1.30", en: "5.80 m × 1.30" },
     colors: [],
     visual: "tube",
+    photos: ["/images/productos/tubo-50.webp"],
   },
   {
     id: "tubo-aluminio-63",
@@ -396,6 +402,7 @@ export const products: Product[] = [
     spec: { es: "5.80 ML × 1.30", en: "5.80 m × 1.30" },
     colors: [],
     visual: "tube",
+    photos: ["/images/productos/tubo-63.webp"],
   },
   {
     id: "cabezal-duo-100",
@@ -437,6 +444,7 @@ export const products: Product[] = [
     spec: { es: "5.80 ML", en: "5.80 m" },
     colors: ["blanco", "crema", "gris", "negro"],
     visual: "bar",
+    photos: ["/images/productos/barra-baja-tradicional.webp"],
   },
   {
     id: "barra-baja-duo",
@@ -450,6 +458,7 @@ export const products: Product[] = [
     spec: { es: "5.80 ML", en: "5.80 m" },
     colors: ["blanco", "crema"],
     visual: "bar",
+    photos: ["/images/productos/barra-baja-duo.webp", "/images/productos/sistema-duo.webp"],
   },
   {
     id: "tapa-perfil-lateral",
@@ -459,6 +468,7 @@ export const products: Product[] = [
     description: { es: "Remate para perfil lateral.", en: "End cap for side profile." },
     colors: ["blanco"],
     visual: "cap",
+    photos: ["/images/productos/tapa-perfil-lateral.webp"],
   },
   {
     id: "tapas-cabezal-100",
@@ -488,6 +498,7 @@ export const products: Product[] = [
     description: { es: "Remate para barra baja de sistemas dúo.", en: "End cap for duo bottom bars." },
     colors: ["blanco", "crema"],
     visual: "cap",
+    photos: ["/images/productos/tapa-barra-baja.webp"],
   },
   {
     id: "tapa-barra-baja-tradicional",
@@ -497,6 +508,7 @@ export const products: Product[] = [
     description: { es: "Remate para barra baja tradicional.", en: "End cap for traditional bottom bars." },
     colors: ["blanco", "crema"],
     visual: "cap",
+    photos: ["/images/productos/tapa-barra-baja.webp"],
   },
   {
     id: "cenefa-pvc",
@@ -522,6 +534,7 @@ export const products: Product[] = [
     },
     colors: [],
     visual: "profile",
+    photos: ["/images/productos/perfil-lateral.webp"],
   },
   {
     id: "ranura-aluminio-duo",
@@ -576,6 +589,7 @@ export const products: Product[] = [
     colors: [],
     visual: "crown",
     ref: 6,
+    photos: ["/images/productos/corona-raex-63.webp"],
   },
 
   // ------------------------------------------------------------- RIELES
@@ -590,6 +604,7 @@ export const products: Product[] = [
     },
     colors: [],
     visual: "rail",
+    photos: ["/images/productos/riel-hotelero.webp"],
   },
   {
     id: "soporte-riel-hotelero",
@@ -599,6 +614,7 @@ export const products: Product[] = [
     description: { es: "Soporte de fijación para riel hotelero.", en: "Fixing bracket for hotel track." },
     colors: [],
     visual: "bracket",
+    photos: ["/images/productos/soporte-riel-hotelero.webp"],
   },
   {
     id: "riel-ripple-fold",
@@ -611,6 +627,7 @@ export const products: Product[] = [
     },
     colors: [],
     visual: "rail",
+    photos: ["/images/productos/riel-ripple-fold.webp"],
   },
 
   // ------------------------------------------------------------- ACCESORIOS
