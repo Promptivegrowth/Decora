@@ -10,11 +10,14 @@ const nextConfig: NextConfig = {
     imageSizes: [64, 128, 256, 384],
   },
   // Accesos al hosting (cPanel) que antes funcionaban con el dominio principal:
-  // ahora el dominio apunta a Vercel, así que se redirigen a los subdominios del hosting.
+  // ahora el dominio apunta a Vercel, así que se redirigen al servidor del hosting.
+  // Se usa el nombre del servidor de Namecheap porque tiene certificado SSL válido
+  // (los subdominios webmail./cpanel. del dominio no tienen SSL propio en el hosting).
   async redirects() {
+    const server = process.env.HOSTING_SERVER ?? "server264-2.web-hosting.com";
     const hosting = [
-      { paths: ["/webmail", "/webmail/:path*", "/correo", "/mail", "/roundcube"], to: "https://webmail.dcorahogarperu.com" },
-      { paths: ["/cpanel", "/cpanel/:path*"], to: "https://cpanel.dcorahogarperu.com" },
+      { paths: ["/webmail", "/webmail/:path*", "/correo", "/mail", "/roundcube"], to: `https://${server}:2096` },
+      { paths: ["/cpanel", "/cpanel/:path*"], to: `https://${server}:2083` },
     ];
     return hosting.flatMap(({ paths, to }) =>
       paths.map((source) => ({ source, destination: to, permanent: false })),
