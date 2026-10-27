@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 828, 1080, 1280, 1600, 1920],
     imageSizes: [64, 128, 256, 384],
   },
+  // Accesos al hosting (cPanel) que antes funcionaban con el dominio principal:
+  // ahora el dominio apunta a Vercel, así que se redirigen a los subdominios del hosting.
+  async redirects() {
+    const hosting = [
+      { paths: ["/webmail", "/webmail/:path*", "/correo", "/mail", "/roundcube"], to: "https://webmail.dcorahogarperu.com" },
+      { paths: ["/cpanel", "/cpanel/:path*"], to: "https://cpanel.dcorahogarperu.com" },
+    ];
+    return hosting.flatMap(({ paths, to }) =>
+      paths.map((source) => ({ source, destination: to, permanent: false })),
+    );
+  },
   async headers() {
     return [
       {
